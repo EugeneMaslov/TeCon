@@ -10,16 +10,14 @@ namespace TeCon
 {
     public partial class MainPage : ContentPage
     {
-        public const string HEADER = "TeCon";
         public MainPage()
         { 
             InitializeComponent();
         }
 
-        public void button1_Clicked(object sender, EventArgs e)
+        public async void button1_Clicked(object sender, EventArgs e)
         {
-            Page1 pg1 = new Page1();
-            this.Content = pg1.Content;
+            await Navigation.PushModalAsync(new Page1());
         }
     }
 }

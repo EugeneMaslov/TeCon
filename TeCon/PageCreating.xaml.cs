@@ -16,5 +16,15 @@ namespace TeCon
         {
             InitializeComponent();
         }
+
+        public void buttonQuest_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        public async void buttonBack_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new MainPage());
+        }
     }
 }

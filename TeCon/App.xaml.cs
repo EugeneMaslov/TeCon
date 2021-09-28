@@ -6,11 +6,13 @@ namespace TeCon
 {
     public partial class App : Application
     {
+        public const string HEADER = "TeCon";
         public App()
         {
+
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()
