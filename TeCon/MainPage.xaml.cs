@@ -18,7 +18,8 @@ namespace TeCon
 
         public void button1_Clicked(object sender, EventArgs e)
         {
-
+            Page1 pg1 = new Page1();
+            this.Content = pg1.Content;
         }
     }
 }

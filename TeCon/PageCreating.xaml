@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TeCon.Page1">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="DimGray">
+            <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
+                <Label Text="TeCon" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+            </Frame>
+            <Label Text="Конструктор теста" HorizontalOptions="Center" FontSize="30" TextColor="White" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
