@@ -4,12 +4,10 @@
              xmlns:local="clr-namespace:TeCon"
              x:Class="TeCon.MainPage">
 
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="DimGray">
-            <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
-                <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
-            </Frame>
-            <Button x:Name="button1" Text="Создать новый тест" Clicked="button1_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout BackgroundColor="DimGray">
+        <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
+            <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+        </Frame>
+        <Button x:Name="button1" Text="Создать новый тест" Clicked="button1_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+    </StackLayout>
 </ContentPage>

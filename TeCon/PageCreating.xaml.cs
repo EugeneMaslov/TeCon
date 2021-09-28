@@ -17,14 +17,14 @@ namespace TeCon
             InitializeComponent();
         }
 
-        public void buttonQuest_Clicked(object sender, EventArgs e)
+        public async void buttonQuest_Clicked(object sender, EventArgs e)
         {
-
+            await Navigation.PushModalAsync(new PageQuestConst());
         }
 
         public async void buttonBack_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new MainPage());
+            await Navigation.PopModalAsync();
         }
     }
 }
