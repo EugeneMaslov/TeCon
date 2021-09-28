@@ -24,6 +24,7 @@ namespace TeCon
 
         private void buttonEndVariant_Clicked(object sender, EventArgs e)
         {
+            Varients varients = new Varients(textBox1.Text, isTrue.On);
         }
     }
 }

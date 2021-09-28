@@ -27,11 +27,6 @@ namespace TeCon
             await Navigation.PopModalAsync();
         }
 
-        private void buttonCreate_Clicked(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonEnd_Clicked(object sender, EventArgs e)
         {
 

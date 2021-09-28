@@ -10,13 +10,15 @@ namespace TeCon
 {
     public partial class MainPage : ContentPage
     {
+        public FacadeQuestions facade;
         public MainPage()
         { 
             InitializeComponent();
         }
-
+        
         public async void button1_Clicked(object sender, EventArgs e)
         {
+            facade = new FacadeQuestions();
             await Navigation.PushModalAsync(new Page1());
         }
     }
