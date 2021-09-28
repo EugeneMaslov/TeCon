@@ -10,16 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace TeCon
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PageQuestConst : ContentPage
+    public partial class PageVarient : ContentPage
     {
-        public PageQuestConst()
+        public PageVarient()
         {
             InitializeComponent();
-        }
-
-        private async void buttonNew_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new PageVarient());
         }
 
         private async void buttonBack_Clicked(object sender, EventArgs e)
@@ -27,14 +22,8 @@ namespace TeCon
             await Navigation.PopModalAsync();
         }
 
-        private void buttonCreate_Clicked(object sender, EventArgs e)
+        private void buttonEndVariant_Clicked(object sender, EventArgs e)
         {
-
-        }
-
-        private void buttonEnd_Clicked(object sender, EventArgs e)
-        {
-
         }
     }
 }

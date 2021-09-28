@@ -7,6 +7,7 @@ namespace TeCon
     public partial class App : Application
     {
         public const string HEADER = "TeCon";
+        public const string IsTrueText = "Правильный ответ";
         public App()
         {
 

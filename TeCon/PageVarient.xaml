@@ -2,17 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TeCon"
-             x:Class="TeCon.PageQuestConst">
+             x:Class="TeCon.PageVarient">
     <ContentPage.Content>
         <StackLayout BackgroundColor="DimGray">
             <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
                 <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
             </Frame>
-            <Label Text="Введите вопрос:" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
-            <Entry PlaceholderColor="LightSkyBlue" HeightRequest="100" FontSize="50"/>
-            <ListView x:Name="listOfQuest" ></ListView>
-            <Button x:Name="buttonNew" Text="Создать вариант ответа" Clicked="buttonNew_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button x:Name="buttonEnd" Text="Сохранить вопрос" Clicked="buttonEnd_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Label Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="28"></Label>
+            <Entry x:Name="textBox1" PlaceholderColor="LightSkyBlue" HeightRequest="100" FontSize="50"/>
+            <TableView Intent="Data">
+                <TableRoot>
+                    <TableSection>
+                        <SwitchCell x:Name="isTrue" Text="{x:Static local:App.IsTrueText}" OnColor="GreenYellow"></SwitchCell>
+                    </TableSection>
+                </TableRoot>
+            </TableView>
+            <Button x:Name="buttonEndVariant" Text="Сохранить" Clicked="buttonEndVariant_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
             <Button Text="Назад" x:Name="buttonBack" Clicked="buttonBack_Clicked" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="100" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
