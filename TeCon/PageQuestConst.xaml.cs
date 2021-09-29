@@ -15,11 +15,11 @@ namespace TeCon
         public PageQuestConst()
         {
             InitializeComponent();
+            BindingContext = new VarientsListViewModel() { Navigation = this.Navigation };
         }
 
-        private async void buttonNew_Clicked(object sender, EventArgs e)
+        private void buttonNew_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new PageVarient());
         }
 
         private async void buttonBack_Clicked(object sender, EventArgs e)

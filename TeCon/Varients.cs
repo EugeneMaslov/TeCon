@@ -9,23 +9,12 @@ namespace TeCon
         /// <summary>
         /// Один вариант
         /// </summary>
-        public string varient { get; set; }
+        public string Varient { get; set; }
 
         /// <summary>
         /// Правильный ли это ответ
         /// </summary>
-        public bool isTrue { get; set; }
+        public bool IsTrue { get; set; }
 
-
-        /// <summary>
-        /// Создание пользователем варианта
-        /// </summary>
-        /// <param name="varient">Созданный вариант</param>
-        /// <param name="isTrue">Пользователь отметил этот вариант правильным</param>
-        public Varients(string varient, bool isTrue)
-        {
-            this.varient = varient;
-            this.isTrue = isTrue;
-        }
     }
 }

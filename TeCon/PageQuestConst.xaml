@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TeCon"
-             x:Class="TeCon.PageQuestConst">
+             x:Class="TeCon.PageQuestConst" Title="Список вариантов">
     <ContentPage.Content>
         <StackLayout BackgroundColor="DimGray">
             <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
@@ -10,8 +10,22 @@
             </Frame>
             <Label Text="Введите вопрос:" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
             <Entry PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
-            <ListView x:Name="listOfQuest" ></ListView>
-            <Button x:Name="buttonNew" Text="Создать вариант ответа" Clicked="buttonNew_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <ListView x:Name="booksList" ItemsSource="{Binding Varients}" HorizontalOptions="FillAndExpand"
+              SelectedItem="{Binding SelectedVarient, Mode=TwoWay}" HasUnevenRows="False">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                            <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Varient}" TextColor="White" FontSize="28" HorizontalOptions="CenterAndExpand"/>
+                                    <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center" ThumbColor="GreenYellow" />
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding CreateVarientCommand}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
             <Button x:Name="buttonEnd" Text="Сохранить вопрос" Clicked="buttonEnd_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
             <Button Text="Назад" x:Name="buttonBack" Clicked="buttonBack_Clicked" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>

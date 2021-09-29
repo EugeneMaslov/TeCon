@@ -2,23 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TeCon"
-             x:Class="TeCon.PageVarient">
+             x:Class="TeCon.PageVarient" Title="Информация о варианте">
     <ContentPage.Content>
         <StackLayout BackgroundColor="DimGray">
             <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
                 <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
             </Frame>
             <Label Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="28"></Label>
-            <Entry x:Name="textBox1" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
-            <TableView Intent="Data">
-                <TableRoot>
-                    <TableSection>
-                        <SwitchCell x:Name="isTrue" Text="{x:Static local:App.IsTrueText}" OnColor="GreenYellow"></SwitchCell>
-                    </TableSection>
-                </TableRoot>
-            </TableView>
-            <Button x:Name="buttonEndVariant" Text="Сохранить" Clicked="buttonEndVariant_Clicked" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Назад" x:Name="buttonBack" Clicked="buttonBack_Clicked" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Entry x:Name="textBox1" Text="{Binding Varient}" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                <Label Text="{x:Static local:App.IsTrueText}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="28"/>
+                <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+            </StackLayout>
+            <Button x:Name="buttonEndVariant" Text="Сохранить" Command="{Binding ListViewModel.SaveVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Удалить" Command="{Binding ListViewModel.DeleteVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ListViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
