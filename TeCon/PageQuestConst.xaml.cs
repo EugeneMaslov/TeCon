@@ -12,10 +12,13 @@ namespace TeCon
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PageQuestConst : ContentPage
     {
-        public PageQuestConst()
+        public QuestionViewModel ViewModel { get; private set; }
+        public PageQuestConst(QuestionViewModel vm)
         {
             InitializeComponent();
             BindingContext = new VarientsListViewModel() { Navigation = this.Navigation };
+            ViewModel = vm;
+            this.BindingContext = ViewModel;
         }
 
         private void buttonNew_Clicked(object sender, EventArgs e)

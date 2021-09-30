@@ -11,6 +11,7 @@ namespace TeCon
         public event PropertyChangedEventHandler PropertyChanged;
         private Varients varients;
         VarientsListViewModel lvm;
+        QuestionListViewModel qlvm;
 
         public VarientsViewModel()
         {
@@ -26,6 +27,18 @@ namespace TeCon
                 {
                     lvm = value;
                     OnPropertyChanged("ListViewModel");
+                }
+            }
+        }
+        public QuestionListViewModel ListQuestViewModel
+        {
+            get { return qlvm; }
+            set
+            {
+                if (qlvm != value)
+                {
+                    qlvm = value;
+                    OnPropertyChanged("ListQuestViewModel");
                 }
             }
         }
