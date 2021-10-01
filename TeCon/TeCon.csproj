@@ -16,19 +16,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="PageCreating.xaml.cs">
+    <Compile Update="Views\PageCreating.xaml.cs">
       <DependentUpon>PageCreating.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="PageCreating.xaml">
+    <EmbeddedResource Update="Views\PageCreating.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="PageQuestConst.xaml">
+    <EmbeddedResource Update="Views\PageQuestConst.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="PageVarient.xaml">
+    <EmbeddedResource Update="Views\PageVarient.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

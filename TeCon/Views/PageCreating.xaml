@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TeCon.Views"
+             x:Class="TeCon.Views.Page1">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="DimGray">
+            <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
+                <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+            </Frame>
+            <Label Text="Название теста" HorizontalOptions="Center" FontSize="30" TextColor="White" />
+            <Entry PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30" Text="{Binding Name}"/>
+            <Button Text="Сохранить" x:Name="buttonSave" Command="{Binding ListViewModel.SaveTestCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Удалить тест" x:Name="buttonDelete" Command="{Binding ListViewModel.DeleteTestCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Создать вопрос" x:Name="buttonQuest" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ListViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TeCon
+namespace TeCon.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PageVarient : ContentPage
     {
-        public VarientsViewModel ViewModel { get; private set; }
-        public PageVarient(VarientsViewModel vm)
+        public PageVarient()
         {
             InitializeComponent();
-            ViewModel = vm;
-            this.BindingContext = ViewModel;
         }
 
         private async void buttonBack_Clicked(object sender, EventArgs e)

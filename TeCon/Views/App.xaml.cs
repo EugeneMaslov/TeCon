@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TeCon
+namespace TeCon.Views
 {
     public partial class App : Application
     {

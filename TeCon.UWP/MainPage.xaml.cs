@@ -21,7 +21,7 @@ namespace TeCon.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new TeCon.App());
+            LoadApplication(new TeCon.Views.App());
         }
     }
 }

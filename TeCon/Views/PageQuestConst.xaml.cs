@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace TeCon
+namespace TeCon.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PageQuestConst : ContentPage
     {
-        public QuestionViewModel ViewModel { get; private set; }
-        public PageQuestConst(QuestionViewModel vm)
+        public PageQuestConst()
         {
             InitializeComponent();
-            BindingContext = new VarientsListViewModel() { Navigation = this.Navigation };
-            ViewModel = vm;
-            this.BindingContext = ViewModel;
         }
 
         private void buttonNew_Clicked(object sender, EventArgs e)
@@ -32,7 +28,6 @@ namespace TeCon
 
         private void buttonEnd_Clicked(object sender, EventArgs e)
         {
-
         }
     }
 }

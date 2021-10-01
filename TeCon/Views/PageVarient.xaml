@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:TeCon"
-             x:Class="TeCon.PageVarient" Title="Информация о варианте">
+             xmlns:local="clr-namespace:TeCon.Views"
+             x:Class="TeCon.Views.PageVarient" Title="Информация о варианте">
     <ContentPage.Content>
         <StackLayout BackgroundColor="DimGray">
             <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
@@ -14,9 +14,9 @@
                 <Label Text="{x:Static local:App.IsTrueText}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="28"/>
                 <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
             </StackLayout>
-            <Button x:Name="buttonEndVariant" Text="Сохранить" Command="{Binding ListQuestViewModel.SaveVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Удалить" Command="{Binding ListQuestViewModel.DeleteVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill" />
-            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ListQuestViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button x:Name="buttonEndVariant" Text="Сохранить" Command="{Binding ListViewModel.SaveVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Удалить" Command="{Binding ListViewModel.DeleteVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ListViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

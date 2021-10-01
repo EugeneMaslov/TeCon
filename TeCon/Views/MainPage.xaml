@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TeCon.Views"
+             x:Class="TeCon.Views.MainPage">
+
+    <StackLayout BackgroundColor="DimGray">
+        <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
+            <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+        </Frame>
+        <ListView x:Name="booksList" ItemsSource="{Binding Tests}"
+              SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout>
+                                <Label Text="{Binding Name}" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+    </StackLayout>
+</ContentPage>

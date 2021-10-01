@@ -5,19 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using TeCon.ViewModels;
 
-namespace TeCon
+namespace TeCon.Views
 {
     public partial class MainPage : ContentPage
     {
         public MainPage()
         { 
             InitializeComponent();
-        }
-        
-        public async void button1_Clicked(object sender, EventArgs e)
-        { 
-            await Navigation.PushModalAsync(new Page1());
+            BindingContext = new TestListViewModel() { Navigation = this.Navigation };
         }
     }
 }
