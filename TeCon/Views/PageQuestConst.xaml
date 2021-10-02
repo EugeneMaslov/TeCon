@@ -9,26 +9,11 @@
                 <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
             </Frame>
             <Label Text="Введите вопрос:" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
-            <Entry PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30" Text="{Binding quest}"/>
-            <ListView x:Name="booksList" ItemsSource="{Binding Varients}" HorizontalOptions="FillAndExpand"
-              SelectedItem="{Binding SelectedVarient, Mode=TwoWay}" HasUnevenRows="False">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                            <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="{Binding Varient}" TextColor="White" FontSize="28" HorizontalOptions="CenterAndExpand"/>
-                                    <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center" ThumbColor="GreenYellow" />
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding ListQuestViewModel.CreateVarientCommand}"  Clicked="buttonNew_Clicked"  TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ListQuestViewModel.SaveQuestionCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ListQuestViewModel.DeleteQuestionCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button Text="Назад" x:Name="buttonBack1" Command="{Binding Path=ListQuestViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Entry PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30" Text="{Binding OQuestion}"/>
+            <Button x:Name="buttonNew" Text="Создать вариант ответа" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ListViewModel.SaveQuestionCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ListViewModel.DeleteQuestionCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button Text="Назад" x:Name="buttonBack1" Command="{Binding Path=ListViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
