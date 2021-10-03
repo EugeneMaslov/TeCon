@@ -9,7 +9,7 @@
                 <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
             </Frame>
             <Label Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="28"></Label>
-            <Entry x:Name="textBox1" Text="{Binding Varient}" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
+            <Entry x:Name="textBox1" Text="{Binding OVarient}" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Label Text="{x:Static local:App.IsTrueText}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="28"/>
                 <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>

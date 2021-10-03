@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TeCon.Models;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace TeCon.ViewModels
 {
@@ -38,6 +39,30 @@ namespace TeCon.ViewModels
                 {
                     Question.OQuestion = value;
                     OnPropertyChanged("OQuestion");
+                }
+            }
+        }
+        public ObservableCollection<VarientViewModel> Varients
+        {
+            get { return Question.Varients; }
+            set
+            {
+                if (Question.Varients != value)
+                {
+                    Question.Varients = value;
+                    OnPropertyChanged("Varients");
+                }
+            }
+        }
+        public VarientViewModel varientViewModel
+        {
+            get { return Question.varientViewModel; }
+            set
+            {
+                if (Question.varientViewModel != value)
+                {
+                    Question.varientViewModel = value;
+                    OnPropertyChanged("varientViewModel");
                 }
             }
         }
