@@ -8,8 +8,13 @@ namespace TeCon.Models
 {
     public class Test
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public ObservableCollection<QuestionViewModel> Questions { get; set; }
-        public QuestionViewModel questionViewModel { get; set; }
+        public IEnumerable<Question> Questions { get; set; }
+        public override bool Equals(object obj)
+        {
+            Test test = obj as Test;
+            return this.Id == test.Id;
+        }
     }
 }

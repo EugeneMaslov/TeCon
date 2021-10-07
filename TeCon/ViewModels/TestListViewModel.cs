@@ -7,12 +7,21 @@ using System.Collections.ObjectModel;
 using Xamarin.Forms;
 using System.Windows.Input;
 using TeCon.Views;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace TeCon.ViewModels
 {
     public class TestListViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<TestViewModel> Tests { get; set; }
+        bool initialized = false;   // была ли начальная инициализация
+        private bool isBusy;    // идет ли загрузка с сервера
+        TestsService testsService = new TestsService();
+
+        public ObservableCollection<Test> Tests { get; set; }
+        public ObservableCollection<Question> Questions { get; set; }
+        public int Id { get; set; }
+        public int QuestId { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand CreateTestCommand { protected set; get; }
         public ICommand DeleteTestCommand { protected set; get; }
@@ -23,27 +32,47 @@ namespace TeCon.ViewModels
         public ICommand CreateVarientCommand { protected set; get; }
         public ICommand DeleteVarientCommand { protected set; get; }
         public ICommand SaveVarientCommand { protected set; get; }
+        public ICommand BackAndClearQuestionCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
-        TestViewModel selectedTest { get; set; }
-        QuestionViewModel selectedQuestion { get; set; }
-        VarientViewModel selectedVarient { get; set; }
+
+        Test selectedTest { get; set; }
+        Question selectedQuestion { get; set; }
+        Varient selectedVarient { get; set; }
 
         public INavigation Navigation { get; set; }
+        public bool IsBusy
+        {
+            get { return isBusy; }
+            set
+            {
+                isBusy = value;
+                OnPropertyChanged("IsBusy");
+                OnPropertyChanged("IsLoaded");
+            }
+        }
+        public bool IsLoaded
+        {
+            get { return !isBusy; }
+        }
+
         public TestListViewModel()
         {
-            Tests = new ObservableCollection<TestViewModel>();
+            Tests = new ObservableCollection<Test>();
+            Questions = new ObservableCollection<Question>();
+            IsBusy = false;
             CreateTestCommand = new Command(CreateTest);
             DeleteTestCommand = new Command(DeleteTest);
             SaveTestCommand = new Command(SaveTest);
             CreateQuestionCommand = new Command(CreateQuestion);
             DeleteQuestionCommand = new Command(DeleteQuestion);
             SaveQuestionCommand = new Command(SaveQuestion);
-            CreateVarientCommand = new Command(CreateVarient);
-            SaveVarientCommand = new Command(SaveVarient);
-            DeleteVarientCommand = new Command(DeleteVarient);
+            //CreateVarientCommand = new Command(CreateVarient);
+            //SaveVarientCommand = new Command(SaveVarient);
+            //DeleteVarientCommand = new Command(DeleteVarient);
+            BackAndClearQuestionCommand = new Command(BackAndClearQuestion);
             BackCommand = new Command(Back);
         }
-        public TestViewModel SelectedTest
+        public Test SelectedTest
         {
             get 
             {
@@ -53,26 +82,22 @@ namespace TeCon.ViewModels
             {
                 if (selectedTest != value)
                 {
-                    TestViewModel tempTest = value;
-                    if (tempTest != null)
+                    Test tempTest = new Test()
                     {
-                        if (selectedTest != null)
-                        {
-                            if (selectedTest.Questions != null)
-                            {
-                                tempTest.Questions = selectedTest.Questions;
-                            }
-                        }
-                    }
-                    selectedTest = tempTest;
+                        Id = value.Id,
+                        Name = value.Name,
+                        Questions = value.Questions
+                    };
+                    Id = Tests.IndexOf(value);
+                    selectedTest = null;
                     OnPropertyChanged("SelectedTest");
-                    Navigation.PushModalAsync(new Page1(tempTest));
+                    Navigation.PushModalAsync(new Page1(tempTest, this));
                 }
             }
         }
-        public QuestionViewModel SelectedQuestion
+        public Question SelectedQuestion
         {
-            get 
+            get
             {
                 return selectedQuestion;
             }
@@ -80,37 +105,16 @@ namespace TeCon.ViewModels
             {
                 if (selectedQuestion != value)
                 {
-                    QuestionViewModel tempQuestion = value;
-                    if (tempQuestion != null)
+                    Question tempQuestion = new Question()
                     {
-                        if (selectedQuestion != null)
-                        {
-                            if (selectedQuestion.Varients != null)
-                            {
-                                tempQuestion.Varients = selectedQuestion.Varients;
-                            }
-                        }
-                    }
-                    selectedQuestion = tempQuestion;
+                        Id = value.Id,
+                        OQuestion = value.OQuestion,
+                        Varients = value.Varients
+                    };
+                    QuestId = Questions.IndexOf(value);
+                    selectedQuestion = null;
                     OnPropertyChanged("SelectedQuestion");
-                    Navigation.PushModalAsync(new PageQuestConst(tempQuestion));
-                }
-            }
-        }
-        public VarientViewModel SelectedVarient
-        {
-            get
-            {
-                return selectedVarient;
-            }
-            set
-            {
-                if (selectedVarient != value)
-                {
-                    VarientViewModel tempVarient = value;
-                    selectedVarient = null;
-                    OnPropertyChanged("SelectedQuestion");
-                    Navigation.PushModalAsync(new PageVarient(tempVarient));
+                    Navigation.PushModalAsync(new PageQuestConst(Tests[Id], tempQuestion, this));
                 }
             }
         }
@@ -121,97 +125,125 @@ namespace TeCon.ViewModels
         }
         private void CreateTest()
         {
-            Navigation.PushModalAsync(new Page1(new TestViewModel() { ListViewModel = this, Questions = new ObservableCollection<QuestionViewModel>() }));
+            Navigation.PushModalAsync(new Page1(new Test(), this));
+        }
+        private void CreateQuestion()
+        {
+            if (Tests[Id] != null)
+            {
+                Navigation.PushModalAsync(new PageQuestConst(Tests[Id], new Question(), this));
+            }
+            else Navigation.PushModalAsync(new PageQuestConst(new Test(), new Question(), this));
         }
         private void Back()
         {
             Navigation.PopModalAsync();
         }
-        private void SaveTest(object testObject)
+        private void BackAndClearQuestion()
         {
-            TestViewModel friend = testObject as TestViewModel;
-            if (friend != null && friend.IsValid && !Tests.Contains(friend))
-            {
-                Tests.Add(friend);
-            }
-            SelectedTest = null;
-            Back();
+            Questions.Clear();
+            Navigation.PopModalAsync();
         }
-        private void DeleteTest(object friendObject)
+        public async Task GetFriends()
         {
-            TestViewModel friend = friendObject as TestViewModel;
+            if (initialized == true) return;
+            IsBusy = true;
+            IEnumerable<Test> friends = await testsService.Get();
+
+            // очищаем список
+            //Tests.Clear();
+            while (Tests.Any())
+                Tests.RemoveAt(Tests.Count - 1);
+
+            // добавляем загруженные данные
+            foreach (Test f in friends)
+                Tests.Add(f);
+            IsBusy = false;
+            initialized = true;
+        }
+        public void GetQuestions()
+        {
+            // очищаем список
+            Questions.Clear();
+            while (Questions.Any())
+                Questions.RemoveAt(Questions.Count - 1);
+
+            // добавляем загруженные данные
+            if (Tests[Id].Questions != null)
+            {
+                foreach (Question f in Tests[Id].Questions)
+                    Questions.Add(f);
+            }
+        }
+        private async void SaveTest(object testObject)
+        {
+            Test friend = testObject as Test;
             if (friend != null)
             {
-                selectedTest = null;
-                Tests.Remove(friend);
+                friend.Questions = Questions;
+                IsBusy = true;
+                // редактирование
+                if (friend.Id > 0)
+                {
+                    Test updatedFriend = await testsService.Update(friend);
+                    // заменяем объект в списке на новый
+                    if (updatedFriend != null)
+                    {
+                        int pos = Tests.IndexOf(updatedFriend);
+                        Tests.RemoveAt(pos);
+                        Tests.Insert(pos, updatedFriend);
+                    }
+                }
+                // добавление
+                else
+                {
+                    Test addedFriend = await testsService.Add(friend);
+                    if (addedFriend != null)
+                        Tests.Add(addedFriend);
+                }
+                IsBusy = false;
             }
             Back();
         }
-        private void CreateQuestion()
+        private void SaveQuestion(object questionObject)
         {
-            Navigation.PushModalAsync(new PageQuestConst(new QuestionViewModel() { ListViewModel = this, Varients = new ObservableCollection<VarientViewModel>() }));
-        }
-        private void SaveQuestion(object questObject)
-        {
-            QuestionViewModel friend = questObject as QuestionViewModel;
-            if (selectedTest != null)
+            Question friend = questionObject as Question;
+            if (QuestId != 0)
             {
-                if (friend != null && friend.IsValid && !selectedTest.Questions.Contains(friend))
+                if (Questions[QuestId].Id >= 0)
                 {
-                    SelectedTest.Questions.Add(friend);
+                    Questions.Remove(Questions[QuestId]);
+                    Questions.Insert(QuestId, friend);
                 }
             }
-            else
+            else if (friend != null && !Questions.Contains(friend))
             {
-                selectedTest = new TestViewModel() { Questions = new ObservableCollection<QuestionViewModel>() };
-                if (friend != null && friend.IsValid && !SelectedTest.Questions.Contains(friend))
-                {
-                    SelectedTest.Questions.Add(friend);
-                }
+                Questions.Add(friend);
             }
-            SelectedQuestion = null;
             Back();
         }
-        private void DeleteQuestion(object questObject)
+        private async void DeleteTest(object friendObject)
         {
-            QuestionViewModel friend = questObject as QuestionViewModel;
+            Test friend = friendObject as Test;
+            Questions.Clear();
             if (friend != null)
             {
-               SelectedQuestion = null;
-               SelectedTest.Questions.Remove(friend);
+                IsBusy = true;
+                Test deletedFriend = await testsService.Delete(friend.Id);
+                if (deletedFriend != null)
+                {
+                    Tests.Remove(deletedFriend);
+                }
+                IsBusy = false;
             }
             Back();
         }
-        private void CreateVarient()
+        private void DeleteQuestion(object questionObject)
         {
-            Navigation.PushModalAsync(new PageVarient(new VarientViewModel() { ListViewModel = this }));
-        }
-        private void SaveVarient(object varientObject)
-        {
-            VarientViewModel friend = varientObject as VarientViewModel;
-            if (selectedQuestion != null)
-            {
-                if (friend != null && friend.IsValid && !selectedQuestion.Varients.Contains(friend))
-                {
-                    SelectedQuestion.Varients.Add(friend);
-                }
-            }
-            else
-            {
-                selectedQuestion = new QuestionViewModel() { Varients = new ObservableCollection<VarientViewModel>() };
-                if (friend != null && friend.IsValid && !selectedQuestion.Varients.Contains(friend))
-                {
-                    SelectedQuestion.Varients.Add(friend);
-                }
-            }
-            Back();
-        }
-        private void DeleteVarient(object varientObject)
-        {
-            VarientViewModel friend = varientObject as VarientViewModel;
+            Question friend = questionObject as Question;
             if (friend != null)
             {
-                selectedQuestion.Varients.Remove(friend);
+                Questions.Remove(friend);
             }
             Back();
         }

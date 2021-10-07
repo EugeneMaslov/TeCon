@@ -8,8 +8,10 @@ namespace TeCon.Models
 {
     public class Question
     {
+        public int Id { get; set; }
         public string OQuestion { get; set; }
-        public ObservableCollection<VarientViewModel> Varients { get; set; }
-        public VarientViewModel varientViewModel { get; set; }
+        public int? TestId { get; set; }
+        public Test Test { get; set; }
+        public IEnumerable<Varient> Varients { get; set; }
     }
 }

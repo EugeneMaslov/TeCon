@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using TeCon.ViewModels;
+using TeCon.Models;
 
 namespace TeCon.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Page1 : ContentPage
     {
-        public TestViewModel ViewModel { get; private set; }
-        public Page1(TestViewModel tvm)
+        public Test Test { get; private set; }
+        public TestListViewModel ViewModel { get; private set; }
+        public Page1(Test model, TestListViewModel viewModel)
         {
             InitializeComponent();
-            ViewModel = tvm;
-            this.BindingContext = ViewModel;
+            Test = model;
+            ViewModel = viewModel;
+            this.BindingContext = this;
         }
     }
 }

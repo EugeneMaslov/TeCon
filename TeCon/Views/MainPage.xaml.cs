@@ -6,15 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using TeCon.ViewModels;
+using Xamarin.Essentials;
+using System.Collections.ObjectModel;
 
 namespace TeCon.Views
 {
     public partial class MainPage : ContentPage
     {
+        TestListViewModel viewModel;
         public MainPage()
         { 
             InitializeComponent();
-            BindingContext = new TestListViewModel() { Navigation = this.Navigation };
+            viewModel = new TestListViewModel() { Navigation = this.Navigation };
+            BindingContext = viewModel;
+        }
+        protected override async void OnAppearing()
+        {
+            await viewModel.GetFriends();
+            base.OnAppearing();
         }
     }
 }

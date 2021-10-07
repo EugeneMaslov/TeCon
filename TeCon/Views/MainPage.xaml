@@ -8,7 +8,7 @@
         <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
             <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
         </Frame>
-        <ListView x:Name="booksList" ItemsSource="{Binding Tests}"
+        <ListView x:Name="testList" ItemsSource="{Binding Tests}"
               SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -22,6 +22,12 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+        <StackLayout IsVisible="{Binding IsBusy}"
+                    HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
+            <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
+            </ActivityIndicator>
+        </StackLayout>
+        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
     </StackLayout>
 </ContentPage>
