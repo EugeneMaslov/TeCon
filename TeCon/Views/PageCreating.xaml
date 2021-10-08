@@ -24,16 +24,16 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout IsVisible="{Binding IsBusy}"
+            <StackLayout IsVisible="{Binding ViewModel.IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
                 <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
-                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
+                <ActivityIndicator IsRunning="{Binding ViewModel.IsBusy}" Color="Red" >
                 </ActivityIndicator>
             </StackLayout>
-            <Button Text="Сохранить" x:Name="buttonSave" Command="{Binding ViewModel.SaveTestCommand}" CommandParameter="{Binding Test}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Удалить тест" x:Name="buttonDelete" Command="{Binding ViewModel.DeleteTestCommand}" CommandParameter="{Binding Test}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Создать вопрос" x:Name="buttonQuest" Command="{Binding ViewModel.CreateQuestionCommand}" CommandParameter="{Binding Test}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button Text="Сохранить" x:Name="buttonSave" Command="{Binding ViewModel.SaveTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Удалить тест" x:Name="buttonDelete" Command="{Binding ViewModel.DeleteTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Создать вопрос" x:Name="buttonQuest" Command="{Binding ViewModel.CreateQuestionCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

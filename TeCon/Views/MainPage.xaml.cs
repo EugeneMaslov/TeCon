@@ -13,16 +13,16 @@ namespace TeCon.Views
 {
     public partial class MainPage : ContentPage
     {
-        TestListViewModel viewModel;
+        TestListViewModel ViewModel;
         public MainPage()
         { 
             InitializeComponent();
-            viewModel = new TestListViewModel() { Navigation = this.Navigation };
-            BindingContext = viewModel;
+            ViewModel = new TestListViewModel() { Navigation = this.Navigation };
+            BindingContext = ViewModel;
         }
         protected override async void OnAppearing()
         {
-            await viewModel.GetFriends();
+            await ViewModel.GetFriends();
             base.OnAppearing();
         }
     }

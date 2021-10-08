@@ -10,8 +10,12 @@ namespace TeCon.Models
     {
         public int Id { get; set; }
         public string OQuestion { get; set; }
-        public int? TestId { get; set; }
-        public Test Test { get; set; }
-        public IEnumerable<Varient> Varients { get; set; }
+        public List<Varient> Varients { get; set; }
+        public int TestId { get; set; }
+        public override bool Equals(object obj)
+        {
+            Question question = obj as Question;
+            return this.Id == question.Id;
+        }
     }
 }

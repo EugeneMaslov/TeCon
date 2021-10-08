@@ -7,11 +7,12 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TeCon.Models;
 
+
 namespace TeCon
 {
-    public class TestsService
+    class QuestionsService
     {
-        const string Url = "https://teconservice.herokuapp.com/api/Tests/";
+        const string Url = "https://teconservice.herokuapp.com/api/Questions/";
         JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -22,48 +23,48 @@ namespace TeCon
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             return client;
         }
-        public async Task<IEnumerable<Test>> Get()
+        public async Task<IEnumerable<Question>> Get()
         {
             HttpClient client = GetClient();
             string result = await client.GetStringAsync(Url);
-            return JsonSerializer.Deserialize<IEnumerable<Test>>(result, options);
+            return JsonSerializer.Deserialize<IEnumerable<Question>>(result, options);
         }
-        public async Task<Test> Add(Test test)
+        public async Task<Question> Add(Question question)
         {
             HttpClient client = GetClient();
             var response = await client.PostAsync(Url,
                 new StringContent(
-                    JsonSerializer.Serialize(test),
+                    JsonSerializer.Serialize(question),
                     Encoding.UTF8, "application/json"));
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Test>(
+            return JsonSerializer.Deserialize<Question>(
                 await response.Content.ReadAsStringAsync(), options);
         }
-        public async Task<Test> Update(Test test)
+        public async Task<Question> Update(Question question)
         {
             HttpClient client = GetClient();
             var response = await client.PutAsync(Url,
                 new StringContent(
-                    JsonSerializer.Serialize(test),
+                    JsonSerializer.Serialize(question),
                     Encoding.UTF8, "application/json"));
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Test>(
+            return JsonSerializer.Deserialize<Question>(
                 await response.Content.ReadAsStringAsync(), options);
         }
-        public async Task<Test> Delete(int id)
+        public async Task<Question> Delete(int id)
         {
             HttpClient client = GetClient();
             var response = await client.DeleteAsync(Url + id);
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<Test>(
+            return JsonSerializer.Deserialize<Question>(
                await response.Content.ReadAsStringAsync(), options);
         }
     }

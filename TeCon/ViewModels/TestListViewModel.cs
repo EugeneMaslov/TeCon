@@ -17,11 +17,12 @@ namespace TeCon.ViewModels
         bool initialized = false;   // была ли начальная инициализация
         private bool isBusy;    // идет ли загрузка с сервера
         TestsService testsService = new TestsService();
+        QuestionsService questionsService = new QuestionsService();
 
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
-        public int Id { get; set; }
-        public int QuestId { get; set; }
+        public ObservableCollection<Question> Varients { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand CreateTestCommand { protected set; get; }
         public ICommand DeleteTestCommand { protected set; get; }
@@ -32,7 +33,6 @@ namespace TeCon.ViewModels
         public ICommand CreateVarientCommand { protected set; get; }
         public ICommand DeleteVarientCommand { protected set; get; }
         public ICommand SaveVarientCommand { protected set; get; }
-        public ICommand BackAndClearQuestionCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
 
         Test selectedTest { get; set; }
@@ -69,7 +69,6 @@ namespace TeCon.ViewModels
             //CreateVarientCommand = new Command(CreateVarient);
             //SaveVarientCommand = new Command(SaveVarient);
             //DeleteVarientCommand = new Command(DeleteVarient);
-            BackAndClearQuestionCommand = new Command(BackAndClearQuestion);
             BackCommand = new Command(Back);
         }
         public Test SelectedTest
@@ -80,18 +79,23 @@ namespace TeCon.ViewModels
             }
             set
             {
-                if (selectedTest != value)
+                if (selectedTest != null)
+                {
+                    selectedTest = null;
+                    OnPropertyChanged("SelectedTest");
+                }
+                else if (selectedTest != value)
                 {
                     Test tempTest = new Test()
                     {
                         Id = value.Id,
                         Name = value.Name,
-                        Questions = value.Questions
+                        Questions = value.Questions,
                     };
-                    Id = Tests.IndexOf(value);
-                    selectedTest = null;
+                    selectedTest = tempTest;
                     OnPropertyChanged("SelectedTest");
                     Navigation.PushModalAsync(new Page1(tempTest, this));
+                    Questions.Clear();
                 }
             }
         }
@@ -109,12 +113,12 @@ namespace TeCon.ViewModels
                     {
                         Id = value.Id,
                         OQuestion = value.OQuestion,
-                        Varients = value.Varients
+                        Varients = value.Varients,
+                        TestId = value.Id
                     };
-                    QuestId = Questions.IndexOf(value);
                     selectedQuestion = null;
                     OnPropertyChanged("SelectedQuestion");
-                    Navigation.PushModalAsync(new PageQuestConst(Tests[Id], tempQuestion, this));
+                    Navigation.PushModalAsync(new PageQuestConst(tempQuestion.TestId, tempQuestion, this));
                 }
             }
         }
@@ -125,23 +129,19 @@ namespace TeCon.ViewModels
         }
         private void CreateTest()
         {
-            Navigation.PushModalAsync(new Page1(new Test(), this));
+            
+            selectedTest = new Test();
+            selectedTest.Name = "";
+            selectedTest.Id = 0;
+            Questions.Clear();
+            Navigation.PushModalAsync(new Page1(selectedTest, this));
         }
         private void CreateQuestion()
         {
-            if (Tests[Id] != null)
-            {
-                Navigation.PushModalAsync(new PageQuestConst(Tests[Id], new Question(), this));
-            }
-            else Navigation.PushModalAsync(new PageQuestConst(new Test(), new Question(), this));
+            Navigation.PushModalAsync(new PageQuestConst(0,new Question(), this));
         }
         private void Back()
         {
-            Navigation.PopModalAsync();
-        }
-        private void BackAndClearQuestion()
-        {
-            Questions.Clear();
             Navigation.PopModalAsync();
         }
         public async Task GetFriends()
@@ -159,28 +159,33 @@ namespace TeCon.ViewModels
             foreach (Test f in friends)
                 Tests.Add(f);
             IsBusy = false;
-            initialized = true;
         }
-        public void GetQuestions()
+        public async Task GetQuestions()
         {
+            if (initialized == true) return;
+            IsBusy = true;
+            IEnumerable<Question> questions = await questionsService.Get();
             // очищаем список
-            Questions.Clear();
+            //Questions.Clear();
             while (Questions.Any())
                 Questions.RemoveAt(Questions.Count - 1);
 
             // добавляем загруженные данные
-            if (Tests[Id].Questions != null)
+            foreach (Question f in questions)
             {
-                foreach (Question f in Tests[Id].Questions)
-                    Questions.Add(f);
+                if (selectedTest.Id == f.TestId)
+                {
+                    Questions.Add(f); //TODO
+                }
             }
+            IsBusy = false;
         }
         private async void SaveTest(object testObject)
         {
             Test friend = testObject as Test;
+            friend.Questions = Questions.ToList();
             if (friend != null)
             {
-                friend.Questions = Questions;
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
@@ -203,29 +208,42 @@ namespace TeCon.ViewModels
                 }
                 IsBusy = false;
             }
+            SelectedTest = null;
             Back();
         }
-        private void SaveQuestion(object questionObject)
+        private async void SaveQuestion(object testObject)
         {
-            Question friend = questionObject as Question;
-            if (QuestId != 0)
+            Question friend = testObject as Question;
+            friend.TestId = selectedTest.Id; //TODO
+            if (friend != null)
             {
-                if (Questions[QuestId].Id >= 0)
+                IsBusy = true;
+                // редактирование
+                if (friend.Id > 0)
                 {
-                    Questions.Remove(Questions[QuestId]);
-                    Questions.Insert(QuestId, friend);
+                    Question updatedFriend = await questionsService.Update(friend);
+                    // заменяем объект в списке на новый
+                    if (updatedFriend != null)
+                    {
+                        int pos = Questions.IndexOf(updatedFriend);
+                        Questions.RemoveAt(pos);
+                        Questions.Insert(pos, updatedFriend);
+                    }
                 }
-            }
-            else if (friend != null && !Questions.Contains(friend))
-            {
-                Questions.Add(friend);
+                // добавление
+                else
+                {
+                    Question addedFriend = await questionsService.Add(friend);
+                    if (addedFriend != null)
+                        Questions.Add(addedFriend);
+                }
+                IsBusy = false;
             }
             Back();
         }
         private async void DeleteTest(object friendObject)
         {
             Test friend = friendObject as Test;
-            Questions.Clear();
             if (friend != null)
             {
                 IsBusy = true;
@@ -236,14 +254,22 @@ namespace TeCon.ViewModels
                 }
                 IsBusy = false;
             }
+            SelectedTest = null;
+            Questions.Clear();
             Back();
         }
-        private void DeleteQuestion(object questionObject)
+        private async void DeleteQuestion(object friendObject)
         {
-            Question friend = questionObject as Question;
+            Question friend = friendObject as Question;
             if (friend != null)
             {
-                Questions.Remove(friend);
+                IsBusy = true;
+                Question deletedFriend = await questionsService.Delete(friend.Id);
+                if (deletedFriend != null)
+                {
+                    Questions.Remove(deletedFriend);
+                }
+                IsBusy = false;
             }
             Back();
         }
