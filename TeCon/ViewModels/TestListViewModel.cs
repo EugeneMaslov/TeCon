@@ -18,10 +18,11 @@ namespace TeCon.ViewModels
         private bool isBusy;    // идет ли загрузка с сервера
         TestsService testsService = new TestsService();
         QuestionsService questionsService = new QuestionsService();
+        VarientsService varientsService = new VarientsService();
 
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
-        public ObservableCollection<Question> Varients { get; set; }
+        public ObservableCollection<Varient> Varients { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand CreateTestCommand { protected set; get; }
@@ -59,6 +60,7 @@ namespace TeCon.ViewModels
         {
             Tests = new ObservableCollection<Test>();
             Questions = new ObservableCollection<Question>();
+            Varients = new ObservableCollection<Varient>();
             IsBusy = false;
             CreateTestCommand = new Command(CreateTest);
             DeleteTestCommand = new Command(DeleteTest);
@@ -66,9 +68,9 @@ namespace TeCon.ViewModels
             CreateQuestionCommand = new Command(CreateQuestion);
             DeleteQuestionCommand = new Command(DeleteQuestion);
             SaveQuestionCommand = new Command(SaveQuestion);
-            //CreateVarientCommand = new Command(CreateVarient);
-            //SaveVarientCommand = new Command(SaveVarient);
-            //DeleteVarientCommand = new Command(DeleteVarient);
+            CreateVarientCommand = new Command(CreateVarient);
+            SaveVarientCommand = new Command(SaveVarient);
+            DeleteVarientCommand = new Command(DeleteVarient);
             BackCommand = new Command(Back);
         }
         public Test SelectedTest
@@ -107,7 +109,12 @@ namespace TeCon.ViewModels
             }
             set
             {
-                if (selectedQuestion != value)
+                if (selectedQuestion != null && value == null)
+                {
+                    selectedQuestion = null;
+                    OnPropertyChanged("SelectedQuestion");
+                }
+                else if (selectedQuestion != value)
                 {
                     Question tempQuestion = new Question()
                     {
@@ -116,9 +123,29 @@ namespace TeCon.ViewModels
                         Varients = value.Varients,
                         TestId = value.Id
                     };
-                    selectedQuestion = null;
+                    selectedQuestion = tempQuestion;
                     OnPropertyChanged("SelectedQuestion");
                     Navigation.PushModalAsync(new PageQuestConst(tempQuestion.TestId, tempQuestion, this));
+                }
+            }
+        }
+        public Varient SelectedVarient
+        {
+            get { return selectedVarient; }
+            set
+            {
+                if (selectedVarient != value)
+                {
+                    Varient tempVarient = new Varient()
+                    {
+                        Id = value.Id,
+                        IsTrue = value.IsTrue,
+                        OVarient = value.OVarient,
+                        QuestionId = value.QuestionId
+                    };
+                    selectedVarient = null;
+                    OnPropertyChanged("SelectedVarient");
+                    Navigation.PushModalAsync(new PageVarient(tempVarient.QuestionId, tempVarient, this));
                 }
             }
         }
@@ -129,16 +156,21 @@ namespace TeCon.ViewModels
         }
         private void CreateTest()
         {
-            
             selectedTest = new Test();
             selectedTest.Name = "";
-            selectedTest.Id = 0;
             Questions.Clear();
             Navigation.PushModalAsync(new Page1(selectedTest, this));
         }
         private void CreateQuestion()
         {
-            Navigation.PushModalAsync(new PageQuestConst(0,new Question(), this));
+            selectedQuestion = new Question();
+            selectedQuestion.OQuestion = "";
+            Varients.Clear();
+            Navigation.PushModalAsync(new PageQuestConst(0,selectedQuestion, this));
+        }
+        private void CreateVarient()
+        {
+            Navigation.PushModalAsync(new PageVarient(0, new Varient(), this));
         }
         private void Back()
         {
@@ -180,6 +212,26 @@ namespace TeCon.ViewModels
             }
             IsBusy = false;
         }
+        public async Task GetVarients()
+        {
+            if (initialized == true) return;
+            IsBusy = true;
+            IEnumerable<Varient> varients = await varientsService.Get();
+            // очищаем список
+            //Questions.Clear();
+            while (Questions.Any())
+                Questions.RemoveAt(Questions.Count - 1);
+
+            // добавляем загруженные данные
+            foreach (Varient f in varients)
+            {
+                if (selectedQuestion.Id == f.QuestionId)
+                {
+                    Varients.Add(f); //TODO
+                }
+            }
+            IsBusy = false;
+        }
         private async void SaveTest(object testObject)
         {
             Test friend = testObject as Test;
@@ -214,6 +266,7 @@ namespace TeCon.ViewModels
         private async void SaveQuestion(object testObject)
         {
             Question friend = testObject as Question;
+            friend.Varients = Varients.ToList();
             friend.TestId = selectedTest.Id; //TODO
             if (friend != null)
             {
@@ -225,6 +278,7 @@ namespace TeCon.ViewModels
                     // заменяем объект в списке на новый
                     if (updatedFriend != null)
                     {
+                        await GetQuestions();
                         int pos = Questions.IndexOf(updatedFriend);
                         Questions.RemoveAt(pos);
                         Questions.Insert(pos, updatedFriend);
@@ -237,6 +291,39 @@ namespace TeCon.ViewModels
                     if (addedFriend != null)
                         Questions.Add(addedFriend);
                 }
+                IsBusy = false;
+            }
+            Varients.Clear();
+            SelectedQuestion = null;
+            Back();
+        }
+        private async void SaveVarient(object varientObject)
+        {
+            Varient friend = varientObject as Varient;
+            friend.QuestionId = selectedQuestion.Id; //TODO
+            if (friend != null)
+            {
+                IsBusy = true;
+                // редактирование
+                if (friend.Id > 0)
+                {
+                    Varient updatedFriend = await varientsService.Update(friend);
+                    //заменяем объект в списке на новый
+                    if (updatedFriend != null)
+                    {
+                        int pos = Varients.IndexOf(updatedFriend);
+                        Varients.RemoveAt(pos);
+                        Varients.Insert(pos, updatedFriend);
+                    }
+                }
+                // добавление
+                else
+                {
+                    Varient addedFriend = await varientsService.Add(friend);
+                    if (addedFriend != null)
+                        Varients.Add(addedFriend);
+                }
+                Varients.Clear();
                 IsBusy = false;
             }
             Back();
@@ -268,6 +355,23 @@ namespace TeCon.ViewModels
                 if (deletedFriend != null)
                 {
                     Questions.Remove(deletedFriend);
+                }
+                IsBusy = false;
+            }
+            SelectedQuestion = null;
+            Varients.Clear();
+            Back();
+        }
+        private async void DeleteVarient(object friendObject)
+        {
+            Varient friend = friendObject as Varient;
+            if (friend != null)
+            {
+                IsBusy = true;
+                Varient deletedFriend = await varientsService.Delete(friend.Id);
+                if (deletedFriend != null)
+                {
+                    Varients.Remove(deletedFriend);
                 }
                 IsBusy = false;
             }

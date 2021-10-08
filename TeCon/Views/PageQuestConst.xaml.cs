@@ -25,5 +25,10 @@ namespace TeCon.Views
             Question = question;
             this.BindingContext = this;
         }
+        protected override async void OnAppearing()
+        {
+            await ViewModel.GetVarients();
+            base.OnAppearing();
+        }
     }
 }

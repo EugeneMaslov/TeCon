@@ -10,7 +10,22 @@
             </Frame>
             <Label Text="Введите вопрос:" HorizontalTextAlignment="Center" TextColor="White" FontSize="28"/>
             <Entry PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30" Text="{Binding Path=Question.OQuestion}"/>
-            <Button x:Name="buttonNew" Text="Создать вариант ответа" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
+            <ListView x:Name="testList" ItemsSource="{Binding ViewModel.Varients}"
+              SelectedItem="{Binding ViewModel.SelectedVarient, Mode=TwoWay}" HasUnevenRows="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                    <Label Text="{Binding OVarient}" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding ViewModel.CreateVarientCommand}" CommandParameter="{Binding Question}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
             <Button x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ViewModel.SaveQuestionCommand}" CommandParameter="{Binding Question}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
             <Button x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ViewModel.DeleteQuestionCommand}" CommandParameter="{Binding Question}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="50" HorizontalOptions="Fill"/>
             <Button Text="Назад" x:Name="buttonBack1" Command="{Binding Path=ViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />

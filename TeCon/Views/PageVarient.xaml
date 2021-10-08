@@ -9,14 +9,20 @@
                 <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
             </Frame>
             <Label Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="28"></Label>
-            <Entry x:Name="textBox1" Text="{Binding OVarient}" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
+            <Entry x:Name="textBox1" Text="{Binding Path=Varient.OVarient}" PlaceholderColor="LightSkyBlue" HeightRequest="50" FontSize="30"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                 <Label Text="{x:Static local:App.IsTrueText}" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="28"/>
-                <Switch IsToggled="{Binding IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Varient.IsTrue}" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
             </StackLayout>
-            <Button x:Name="buttonEndVariant" Text="Сохранить" Command="{Binding ListViewModel.SaveVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Удалить" Command="{Binding ListViewModel.DeleteVarientCommand}" CommandParameter="{Binding}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill" />
-            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ListViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <StackLayout IsVisible="{Binding ViewModel.IsBusy}"
+                    HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
+                <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
+                <ActivityIndicator IsRunning="{Binding ViewModel.IsBusy}" Color="Red" >
+                </ActivityIndicator>
+            </StackLayout>
+            <Button x:Name="buttonEndVariant" Text="Сохранить" Command="{Binding ViewModel.SaveVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Удалить" Command="{Binding ViewModel.DeleteVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="DimGray" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
