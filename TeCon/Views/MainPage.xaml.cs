@@ -22,8 +22,17 @@ namespace TeCon.Views
         }
         protected override async void OnAppearing()
         {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                await ViewModel.GetFriends();
+                ViewModel.SelectedTest = null;
+                base.OnAppearing();
+            }
+        }
+
+        private async void testList_Refreshing(object sender, EventArgs e)
+        {
             await ViewModel.GetFriends();
-            base.OnAppearing();
         }
     }
 }

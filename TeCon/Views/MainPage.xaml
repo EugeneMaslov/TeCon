@@ -4,11 +4,27 @@
              xmlns:local="clr-namespace:TeCon.Views"
              x:Class="TeCon.Views.MainPage">
 
-    <StackLayout BackgroundColor="DimGray">
-        <Frame BackgroundColor="DarkSlateGray" Padding="24" CornerRadius="0">
+    <StackLayout>
+        <StackLayout.Background>
+            <LinearGradientBrush EndPoint="0,1">
+                <GradientStop Color="#9A69A2"
+                          Offset="0.1" />
+                <GradientStop Color="#312134"
+                          Offset="1.0" />
+            </LinearGradientBrush>
+        </StackLayout.Background>
+        <Frame Padding="24" CornerRadius="0">
             <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+            <Frame.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#280C2D"
+                          Offset="0.1" />
+                    <GradientStop Color="#9A69A2"
+                          Offset="1.0" />
+                </LinearGradientBrush>
+            </Frame.Background>
         </Frame>
-        <ListView x:Name="testList" ItemsSource="{Binding Tests}"
+        <ListView x:Name="testList" ItemsSource="{Binding Tests}" Refreshing="testList_Refreshing"
               SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -28,6 +44,6 @@
             <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
             </ActivityIndicator>
         </StackLayout>
-        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="Black" FontSize="30" BackgroundColor="LightGray" HeightRequest="100" HorizontalOptions="Fill"/>
+        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
     </StackLayout>
 </ContentPage>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeCon.Models;
 using TeCon.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,8 +28,11 @@ namespace TeCon.Views
         }
         protected override async void OnAppearing()
         {
-            await ViewModel.GetVarients();
-            base.OnAppearing();
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                await ViewModel.GetVarients();
+                base.OnAppearing();
+            }
         }
     }
 }
