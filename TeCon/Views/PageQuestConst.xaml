@@ -33,7 +33,7 @@
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-                                    <Label Text="{Binding OVarient}" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding OVarient}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                     <Switch IsToggled="{Binding IsTrue}" IsEnabled="False" OnColor="GreenYellow" ThumbColor="GreenYellow" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
                                 </StackLayout>
                             </ViewCell.View>
@@ -41,6 +41,9 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <StackLayout IsVisible="false" x:Name="isNotConnection">
+                <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
             <Button x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding ViewModel.CreateVarientCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>
             <Button x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ViewModel.SaveQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>
             <Button x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ViewModel.DeleteQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>

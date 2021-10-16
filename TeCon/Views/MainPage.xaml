@@ -31,7 +31,7 @@
                     <ViewCell>
                         <ViewCell.View>
                             <StackLayout>
-                                <Label Text="{Binding Name}" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                <Label Text="{Binding Name}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                             </StackLayout>
                         </ViewCell.View>
                     </ViewCell>
@@ -43,6 +43,9 @@
             <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
             <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
             </ActivityIndicator>
+        </StackLayout>
+        <StackLayout IsVisible="false" x:Name="isNotConnection">
+            <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
         </StackLayout>
         <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
     </StackLayout>

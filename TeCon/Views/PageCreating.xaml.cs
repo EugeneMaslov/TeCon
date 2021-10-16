@@ -28,10 +28,12 @@ namespace TeCon.Views
         {
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
+                isNotConnection.IsVisible = false;
                 await ViewModel.GetQuestions();
                 ViewModel.SelectedQuestion = null;
                 base.OnAppearing();
             }
+            else isNotConnection.IsVisible = true;
         }
     }
 }

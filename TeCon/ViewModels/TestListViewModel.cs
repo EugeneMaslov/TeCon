@@ -213,7 +213,10 @@ namespace TeCon.ViewModels
 
             // добавляем загруженные данные
             foreach (Test f in friends)
+            {
                 Tests.Add(f);
+            }    
+                
             IsBusy = false;
         }
         public async Task GetQuestions()
@@ -276,6 +279,8 @@ namespace TeCon.ViewModels
         {
             Test friend = testObject as Test;
             friend.Questions = Questions.ToList();
+            if (friend.Name == "")
+                friend.Name = "Неназванный тест";
             if (friend != null)
             {
                 IsBusy = true;
@@ -307,6 +312,8 @@ namespace TeCon.ViewModels
             Test friend = testObject as Test;
             if (friend != null)
             {
+                if (friend.Name == "")
+                    friend.Name = "Неназванный тест";
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
@@ -318,16 +325,18 @@ namespace TeCon.ViewModels
                         int pos = Tests.IndexOf(updatedFriend);
                         Tests.RemoveAt(pos);
                         Tests.Insert(pos, updatedFriend);
+                        SelectedTest = updatedFriend;
                     }
-                    SelectedTest = updatedFriend;
                 }
                 // добавление
                 else
                 {
                     Test addedFriend = await testsService.Add(friend);
                     if (addedFriend != null)
+                    {
                         Tests.Add(addedFriend);
-                    SelectedTest = addedFriend; 
+                        SelectedTest = addedFriend;
+                    }
                 }
                 IsBusy = false;
             }
@@ -335,6 +344,8 @@ namespace TeCon.ViewModels
         private async void SaveQuestion(object testObject)
         {
             Question friend = testObject as Question;
+            if (friend.OQuestion == "")
+                friend.OQuestion = "Неназванный вопрос";
             friend.Varients = Varients.ToList();
             if (selectedTest.Id == 0)
             {
@@ -379,6 +390,8 @@ namespace TeCon.ViewModels
             friend.TestId = selectedTest.Id;
             if (friend != null)
             {
+                if (friend.OQuestion == "")
+                    friend.OQuestion = "Неназванный вопрос";
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
@@ -398,8 +411,10 @@ namespace TeCon.ViewModels
                 {
                     Question addedFriend = await questionsService.Add(friend);
                     if (addedFriend != null)
+                    {
                         Questions.Add(addedFriend);
-                    SelectedQuestion = addedFriend;
+                        SelectedQuestion = addedFriend;
+                    }
                 }
                 IsBusy = false;
             }
@@ -416,6 +431,8 @@ namespace TeCon.ViewModels
             friend.QuestionId = selectedQuestion.Id; 
             if (friend != null)
             {
+                if (friend.OVarient == null)
+                    friend.OVarient = "Неназванный вариант";
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
