@@ -50,7 +50,7 @@
             <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
         </StackLayout>
         <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
-        <Button Text="Смена аккаунта" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="400" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button Text="Смена аккаунта" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
     </StackLayout>
     </ContentPage.Content>
 </ContentPage>

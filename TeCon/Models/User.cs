@@ -15,7 +15,7 @@ namespace TeCon.Models
         public override bool Equals(object obj)
         {
             User user = obj as User;
-            return this.Login == user.Login && this.Email == user.Email && this.GetHash(Password) == user.Password;
+            return this.Login == user.Login && this.GetHash(Password) == user.Password;
         }
         public string GetHash(string input)
         {

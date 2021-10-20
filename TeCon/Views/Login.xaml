@@ -27,10 +27,8 @@
             </Frame>
             <Label Text="Вход" HorizontalOptions="Center" FontSize="28" TextColor="White" />
             <Label Text="Логин:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
-            <Label Text="Е-mail:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Email}" TextColor="White"/>
-            <Label Text="Пароль:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
+        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
+        <Label Text="Пароль:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
             <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" IsPassword="True" TextColor="White"/>
             <StackLayout IsVisible="{Binding IsVerify}">
                 <Label  Text="Пользователь не найден!" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"></Label>
