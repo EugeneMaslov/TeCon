@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TeCon.Views"
+             x:Class="TeCon.Views.Login">
+    <StackLayout>
+            <StackLayout.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#9A69A2"
+                          Offset="0.1" />
+                    <GradientStop Color="#312134"
+                          Offset="1.0" />
+                </LinearGradientBrush>
+            </StackLayout.Background>
+            <Frame Padding="24" CornerRadius="0">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+                </StackLayout>
+                <Frame.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#280C2D"
+                          Offset="0.1" />
+                        <GradientStop Color="#9A69A2"
+                          Offset="1.0" />
+                    </LinearGradientBrush>
+                </Frame.Background>
+            </Frame>
+            <Label Text="Вход" HorizontalOptions="Center" FontSize="28" TextColor="White" />
+            <Label Text="Логин:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
+            <Label Text="Е-mail:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Email}" TextColor="White"/>
+            <Label Text="Пароль:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" IsPassword="True" TextColor="White"/>
+            <StackLayout IsVisible="{Binding IsVerify}">
+                <Label  Text="Пользователь не найден!" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"></Label>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding IsBusy}"
+                    HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
+                <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
+                </ActivityIndicator>
+            </StackLayout>
+            <Button Text="Войти" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button Text="Удалить аккаунт" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button Text="Создать аккаунт" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+        </StackLayout>
+</ContentPage>

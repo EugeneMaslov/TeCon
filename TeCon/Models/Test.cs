@@ -11,6 +11,7 @@ namespace TeCon.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public List<Question> Questions { get; set; }
+        public int UserId { get; set; }
         public override bool Equals(object obj)
         {
             Test test = obj as Test;

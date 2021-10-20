@@ -1,4 +1,5 @@
 ﻿using System;
+using TeCon.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,10 +11,8 @@ namespace TeCon.Views
         public const string IsTrueText = "Правильный ответ";
         public App()
         {
-
             InitializeComponent();
-
-            MainPage = new MainPage();
+            MainPage = new Login(new User());
         }
 
         protected override void OnStart()
