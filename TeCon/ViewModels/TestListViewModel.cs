@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using TeCon.Models;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-using Xamarin.Forms;
-using System.Windows.Input;
-using TeCon.Views;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using TeCon.Models;
+using TeCon.Views;
+using Xamarin.Forms;
 
 namespace TeCon.ViewModels
 {
@@ -16,13 +17,17 @@ namespace TeCon.ViewModels
     {
         bool initialized = false;   // была ли начальная инициализация
         private bool isBusy;    // идет ли загрузка с сервера
+        private bool isVerify; // верификация
         TestsService testsService = new TestsService();
         QuestionsService questionsService = new QuestionsService();
         VarientsService varientsService = new VarientsService();
+        LoginService loginService = new LoginService();
+
 
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
         public ObservableCollection<Varient> Varients { get; set; }
+        public User User { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand CreateTestCommand { protected set; get; }
@@ -34,12 +39,18 @@ namespace TeCon.ViewModels
         public ICommand CreateVarientCommand { protected set; get; }
         public ICommand DeleteVarientCommand { protected set; get; }
         public ICommand SaveVarientCommand { protected set; get; }
+        public ICommand UserInCommand { protected set; get; }
+        public ICommand UserOutCommand { protected set; get; }
+        public ICommand UserCreateCommand { protected set; get; }
+        public ICommand RegistrCommand { protected set; get; }
+        public ICommand LoginCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
 
         Test selectedTest { get; set; }
         Question selectedQuestion { get; set; }
         Question postSelectedQuestion { get; set; }
         Varient selectedVarient { get; set; }
+        User activeUser { get; set; }
 
         public INavigation Navigation { get; set; }
         public bool IsBusy
@@ -56,12 +67,22 @@ namespace TeCon.ViewModels
         {
             get { return !isBusy; }
         }
+        public bool IsVerify
+        {
+            get { return isVerify; }
+            set
+            {
+                isVerify = value;
+                OnPropertyChanged("IsVerify");
+            }
+        }
 
         public TestListViewModel()
         {
             Tests = new ObservableCollection<Test>();
             Questions = new ObservableCollection<Question>();
             Varients = new ObservableCollection<Varient>();
+            User = new User();
             IsBusy = false;
             CreateTestCommand = new Command(CreateTest);
             DeleteTestCommand = new Command(DeleteTest);
@@ -72,11 +93,31 @@ namespace TeCon.ViewModels
             CreateVarientCommand = new Command(CreateVarient);
             SaveVarientCommand = new Command(SaveVarient);
             DeleteVarientCommand = new Command(DeleteVarient);
+            UserInCommand = new Command(UserIn);
+            UserOutCommand = new Command(UserOut);
+            RegistrCommand = new Command(Registr);
+            LoginCommand = new Command(NewLogin);
+            UserCreateCommand = new Command(UserCreate);
             BackCommand = new Command(Back);
         }
+        public User ActiveUser
+        {
+            get { return activeUser; }
+            set
+            {
+                if (value != null)
+                {
+                    this.activeUser = value;
+                }
+                else activeUser = null;
+                OnPropertyChanged("ActiveUser");
+                Navigation.PushModalAsync(new MainPage(this));
+            }
+        }
+
         public Test SelectedTest
         {
-            get 
+            get
             {
                 return selectedTest;
             }
@@ -178,6 +219,69 @@ namespace TeCon.ViewModels
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
+        private void NewLogin()
+        {
+            Navigation.PushModalAsync(new Login(new User()));
+        }
+        private async void UserIn(object User)
+        {
+            this.User = User as User;
+            if (await CheckUser())
+            {
+                IsVerify = false;
+                ActiveUser = this.User;
+                await Navigation.PushModalAsync(new MainPage(this));
+            }
+            else IsVerify = true;
+        }
+        private async void UserOut(object userObject)
+        {
+            User user = userObject as User;
+            user = await GetUser(user);
+            if (user != null)
+            {
+                IsBusy = true;
+                User deletedFriend = await loginService.Delete(user.Id);
+                if (deletedFriend != null)
+                {
+                    User = null;
+                    ActiveUser = null;
+                }
+                IsBusy = false;
+            }
+            await Navigation.PushModalAsync(new Login(new User()));
+        }
+        private void Registr()
+        {
+            Navigation.PushModalAsync(new Register(this, new User()));
+        }
+        private async void UserCreate(object userObject)
+        {
+            User user = userObject as User;
+            if (user != null)
+            {
+                IsBusy = true;
+                // редактирование
+                if (user.Id > 0)
+                {
+                    //TODO
+                }
+                // добавление
+                else
+                {
+                    user.Password = GetHash(user.Password);
+                    User addedFriend = await loginService.Add(user);
+                    if (addedFriend != null)
+                        ActiveUser = addedFriend;
+                }
+                IsBusy = false;
+            }
+            Later();
+        }
+        private void Later()
+        {
+            Navigation.PushModalAsync(new MainPage(this));
+        }
         private void CreateTest()
         {
             selectedTest = new Test();
@@ -190,7 +294,7 @@ namespace TeCon.ViewModels
             selectedQuestion = new Question();
             selectedQuestion.OQuestion = "";
             Varients.Clear();
-            Navigation.PushModalAsync(new PageQuestConst(0,selectedQuestion, this));
+            Navigation.PushModalAsync(new PageQuestConst(0, selectedQuestion, this));
         }
         private void CreateVarient()
         {
@@ -199,6 +303,40 @@ namespace TeCon.ViewModels
         private void Back()
         {
             Navigation.PopModalAsync();
+        }
+        public async Task<bool> CheckUser()
+        {
+            IsBusy = true;
+            IEnumerable<User> users = await loginService.Get();
+            List<User> inter = users.ToList();
+            foreach (User user in inter)
+            {
+                if (User.Equals(user))
+                {
+                    User = user;
+                    IsBusy = false;
+                    return true;
+                }
+            }
+            IsBusy = false;
+            return false;
+        }
+        public async Task<User> GetUser(User GettedUser)
+        {
+            IsBusy = true;
+            IEnumerable<User> users = await loginService.Get();
+            List<User> inter = users.ToList();
+            foreach (User user in inter)
+            {
+                if (GettedUser.Equals(user))
+                {
+                    GettedUser = user;
+                    IsBusy = false;
+                    return GettedUser;
+                }
+            }
+            IsBusy = false;
+            return null;
         }
         public async Task GetFriends()
         {
@@ -214,9 +352,12 @@ namespace TeCon.ViewModels
             // добавляем загруженные данные
             foreach (Test f in friends)
             {
-                Tests.Add(f);
-            }    
-                
+                if (f.UserId == activeUser.Id)
+                {
+                    Tests.Add(f);
+                }
+            }
+
             IsBusy = false;
         }
         public async Task GetQuestions()
@@ -234,7 +375,7 @@ namespace TeCon.ViewModels
             {
                 if (selectedTest.Id == f.TestId)
                 {
-                    Questions.Add(f); 
+                    Questions.Add(f);
                 }
             }
             IsBusy = false;
@@ -283,6 +424,7 @@ namespace TeCon.ViewModels
                 friend.Name = "Неназванный тест";
             if (friend != null)
             {
+                friend.UserId = activeUser.Id;
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
@@ -314,6 +456,7 @@ namespace TeCon.ViewModels
             {
                 if (friend.Name == "")
                     friend.Name = "Неназванный тест";
+                friend.UserId = activeUser.Id;
                 IsBusy = true;
                 // редактирование
                 if (friend.Id > 0)
@@ -351,7 +494,7 @@ namespace TeCon.ViewModels
             {
                 await SaveTestNotBack(selectedTest);
             }
-            friend.TestId = selectedTest.Id; 
+            friend.TestId = selectedTest.Id;
             if (friend != null)
             {
                 IsBusy = true;
@@ -428,7 +571,7 @@ namespace TeCon.ViewModels
                 isNewQuestion = true;
                 await SaveQuestionNotBack(selectedQuestion);
             }
-            friend.QuestionId = selectedQuestion.Id; 
+            friend.QuestionId = selectedQuestion.Id;
             if (friend != null)
             {
                 if (friend.OVarient == null)
@@ -510,6 +653,12 @@ namespace TeCon.ViewModels
                 IsBusy = false;
             }
             Back();
+        }
+        public string GetHash(string input)
+        {
+            var md5 = MD5.Create();
+            var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return Convert.ToBase64String(hash);
         }
     }
 }

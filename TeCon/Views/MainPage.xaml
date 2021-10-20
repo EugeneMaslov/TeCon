@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TeCon.Views"
              x:Class="TeCon.Views.MainPage">
-
-    <StackLayout>
+    <ContentPage.Content>
+        <StackLayout>
         <StackLayout.Background>
             <LinearGradientBrush EndPoint="0,1">
                 <GradientStop Color="#9A69A2"
@@ -14,7 +14,9 @@
             </LinearGradientBrush>
         </StackLayout.Background>
         <Frame Padding="24" CornerRadius="0">
-            <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
+            </StackLayout>
             <Frame.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#280C2D"
@@ -48,5 +50,7 @@
             <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
         </StackLayout>
         <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
+        <Button Text="Смена аккаунта" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="400" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
     </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

@@ -8,17 +8,19 @@ using Xamarin.Forms;
 using TeCon.ViewModels;
 using Xamarin.Essentials;
 using System.Collections.ObjectModel;
+using Xamarin.Forms.Xaml;
 
 namespace TeCon.Views
 {
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        TestListViewModel ViewModel;
-        public MainPage()
+        public TestListViewModel ViewModel { get; private set; }
+        public MainPage(TestListViewModel viewModel)
         { 
             InitializeComponent();
-            ViewModel = new TestListViewModel() { Navigation = this.Navigation };
-            BindingContext = ViewModel;
+            ViewModel = viewModel;
+            this.BindingContext = ViewModel;
         }
         protected override async void OnAppearing()
         {
@@ -31,7 +33,6 @@ namespace TeCon.Views
             }
             else isNotConnection.IsVisible = true;
         }
-
         private async void testList_Refreshing(object sender, EventArgs e)
         {
             await ViewModel.GetFriends();
