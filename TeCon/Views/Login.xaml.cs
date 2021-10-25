@@ -24,5 +24,17 @@ namespace TeCon.Views
             ViewModel = new TestListViewModel() { Navigation = this.Navigation };
             BindingContext = ViewModel;
         }
+        protected override async void OnAppearing()
+        {
+            if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+            {
+                isNotConnection.IsVisible = false;
+            }
+            else
+            {
+                isNotConnection.IsVisible = true;
+                ViewModel.IsBusy = true;
+            }
+        }
     }
 }

@@ -39,6 +39,12 @@
                 <ActivityIndicator IsRunning="{Binding ViewModel.IsBusy}" Color="Red" >
                 </ActivityIndicator>
             </StackLayout>
+            <StackLayout IsVisible="false" x:Name="isNotConnection">
+                <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+            <StackLayout IsVisible="{Binding ViewModel.isNull}" x:Name="Null">
+                <Label Text="Ни одно из полей не может быть пустым!" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
             <Button Text="Сохранить и войти" x:Name="buttonSave" Command="{Binding ViewModel.UserCreateCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
             <Button Text="Удалить аккаунт" x:Name="buttonDeleteUser" Command="{Binding ViewModel.UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
             <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />

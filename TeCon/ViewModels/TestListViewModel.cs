@@ -15,9 +15,11 @@ namespace TeCon.ViewModels
 {
     public class TestListViewModel : INotifyPropertyChanged
     {
+        #region Initialization
         bool initialized = false;   // была ли начальная инициализация
         private bool isBusy;    // идет ли загрузка с сервера
         private bool isVerify; // верификация
+        private bool isNull = false;
         TestsService testsService = new TestsService();
         QuestionsService questionsService = new QuestionsService();
         VarientsService varientsService = new VarientsService();
@@ -51,8 +53,13 @@ namespace TeCon.ViewModels
         Question postSelectedQuestion { get; set; }
         Varient selectedVarient { get; set; }
         User activeUser { get; set; }
-
         public INavigation Navigation { get; set; }
+        public string GetHash(string input)
+        {
+            var md5 = MD5.Create();
+            var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+            return Convert.ToBase64String(hash);
+        }
         public bool IsBusy
         {
             get { return isBusy; }
@@ -100,6 +107,8 @@ namespace TeCon.ViewModels
             UserCreateCommand = new Command(UserCreate);
             BackCommand = new Command(Back);
         }
+        #endregion
+        #region LoadedRegion & SelectedObjects
         public User ActiveUser
         {
             get { return activeUser; }
@@ -219,6 +228,8 @@ namespace TeCon.ViewModels
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
+        #endregion
+        #region Creating and Logging
         private void NewLogin()
         {
             Navigation.PushModalAsync(new Login(new User()));
@@ -260,23 +271,32 @@ namespace TeCon.ViewModels
             User user = userObject as User;
             if (user != null)
             {
-                IsBusy = true;
-                // редактирование
-                if (user.Id > 0)
+                if ((user.Login != null && user.Email != null && user.Password != null) && (user.Login != "" && user.Email != "" && user.Password != ""))
                 {
-                    //TODO
+                    IsBusy = true;
+                    isNull = false;
+                    // редактирование
+                    if (user.Id > 0)
+                    {
+                        //TODO
+                    }
+                    // добавление
+                    else
+                    {
+
+                        user.Password = GetHash(user.Password);
+                        User addedFriend = await loginService.Add(user);
+                        if (addedFriend != null)
+                            ActiveUser = addedFriend;
+                    }
+                    IsBusy = false;
+                    Later();
                 }
-                // добавление
                 else
                 {
-                    user.Password = GetHash(user.Password);
-                    User addedFriend = await loginService.Add(user);
-                    if (addedFriend != null)
-                        ActiveUser = addedFriend;
+                    isNull = true;
                 }
-                IsBusy = false;
             }
-            Later();
         }
         private void Later()
         {
@@ -338,6 +358,8 @@ namespace TeCon.ViewModels
             IsBusy = false;
             return null;
         }
+        #endregion
+        #region Getting on Server
         public async Task GetFriends()
         {
             if (initialized == true) return;
@@ -416,6 +438,8 @@ namespace TeCon.ViewModels
 
             IsBusy = false;
         }
+        #endregion
+        #region Saving
         private async void SaveTest(object testObject)
         {
             Test friend = testObject as Test;
@@ -605,6 +629,8 @@ namespace TeCon.ViewModels
                 Back();
             }
         }
+        #endregion
+        #region Deleting
         private async void DeleteTest(object friendObject)
         {
             Test friend = friendObject as Test;
@@ -654,11 +680,7 @@ namespace TeCon.ViewModels
             }
             Back();
         }
-        public string GetHash(string input)
-        {
-            var md5 = MD5.Create();
-            var hash = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
-            return Convert.ToBase64String(hash);
-        }
+        #endregion
     }
 }
+ 
