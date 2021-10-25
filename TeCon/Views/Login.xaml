@@ -39,7 +39,10 @@
                 <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
                 </ActivityIndicator>
             </StackLayout>
-            <Button Text="Войти" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+        <StackLayout IsVisible="false" x:Name="isNotConnection">
+            <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+        </StackLayout>
+        <Button Text="Войти" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
             <Button Text="Удалить аккаунт" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
             <Button Text="Создать аккаунт" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
         </StackLayout>

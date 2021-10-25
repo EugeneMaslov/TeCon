@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TeCon.Models;
 using TeCon.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -21,6 +22,18 @@ namespace TeCon.Views
 			User = user;
 			ViewModel = viewModel;
 			this.BindingContext = this;
+		}
+		protected override async void OnAppearing()
+		{
+			if (Connectivity.NetworkAccess == NetworkAccess.Internet)
+			{
+				isNotConnection.IsVisible = false;
+			}
+			else
+			{
+				isNotConnection.IsVisible = true;
+				ViewModel.IsBusy = true;
+			}
 		}
 	}
 }
