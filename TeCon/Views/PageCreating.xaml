@@ -26,6 +26,8 @@
             </Frame>
             <Label Text="Название теста" HorizontalOptions="Center" FontSize="14" TextColor="White" />
             <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=Test.Name}" TextColor="White"/>
+            <Label Text="Код теста: " HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" IsReadOnly="True" HeightRequest="30" FontSize="14" Text="{Binding Path=Test.Code}" TextColor="White"/>
             <ListView x:Name="testList" ItemsSource="{Binding ViewModel.Questions}"
               SelectedItem="{Binding ViewModel.SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True">
                 <ListView.ItemTemplate>

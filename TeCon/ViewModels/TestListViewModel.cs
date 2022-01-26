@@ -25,7 +25,7 @@ namespace TeCon.ViewModels
         VarientsService varientsService = new VarientsService();
         LoginService loginService = new LoginService();
 
-
+        public string TestCode { get; set; }
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
         public ObservableCollection<Varient> Varients { get; set; }
@@ -139,14 +139,19 @@ namespace TeCon.ViewModels
                         Id = value.Id,
                         Name = value.Name,
                         Questions = value.Questions,
+                        Code = value.Code
                     };
+                    TestCode = value.Code;
                     selectedTest = tempTest;
                     OnPropertyChanged("SelectedTest");
+                    OnPropertyChanged("TestCode");
                 }
                 else if (selectedTest != null && value == null)
                 {
                     selectedTest = null;
+                    TestCode = null;
                     OnPropertyChanged("SelectedTest");
+                    OnPropertyChanged("TestCode");
                 }
                 else if (selectedTest != value)
                 {
@@ -155,7 +160,10 @@ namespace TeCon.ViewModels
                         Id = value.Id,
                         Name = value.Name,
                         Questions = value.Questions,
+                        Code = value.Code
                     };
+                    TestCode = value.Code;
+                    OnPropertyChanged("TestCode");
                     selectedTest = tempTest;
                     OnPropertyChanged("SelectedTest");
                     Navigation.PushModalAsync(new Page1(tempTest, this));
@@ -440,9 +448,24 @@ namespace TeCon.ViewModels
         }
         #endregion
         #region Saving
+        static string GenerateString()
+        {
+            Random r = new Random();
+            string s = "";
+            while (s.Length < 6)
+            {
+                s += (char)r.Next(char.MaxValue);
+            }
+            return s;
+        }
         private async void SaveTest(object testObject)
         {
             Test friend = testObject as Test;
+            if (friend.Code == null)
+            {
+                friend.Code = GetHash(GenerateString());
+            }
+            TestCode = friend.Code;
             friend.Questions = Questions.ToList();
             if (friend.Name == "")
                 friend.Name = "Неназванный тест";
@@ -470,6 +493,7 @@ namespace TeCon.ViewModels
                         Tests.Add(addedFriend);
                 }
                 IsBusy = false;
+                OnPropertyChanged("TestCode");
             }
             Back();
         }
