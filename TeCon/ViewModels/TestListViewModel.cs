@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using TeCon.Models;
 using TeCon.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace TeCon.ViewModels
@@ -47,6 +48,7 @@ namespace TeCon.ViewModels
         public ICommand RegistrCommand { protected set; get; }
         public ICommand LoginCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
+        public ICommand CopyCommand { protected set; get; }
 
         Test selectedTest { get; set; }
         Question selectedQuestion { get; set; }
@@ -106,6 +108,7 @@ namespace TeCon.ViewModels
             LoginCommand = new Command(NewLogin);
             UserCreateCommand = new Command(UserCreate);
             BackCommand = new Command(Back);
+            CopyCommand = new Command(CopyMethod);
         }
         #endregion
         #region LoadedRegion & SelectedObjects
@@ -448,22 +451,39 @@ namespace TeCon.ViewModels
         }
         #endregion
         #region Saving
-        static string GenerateString()
+        public void CopyMethod()
         {
+            Clipboard.SetTextAsync(TestCode);
+        }
+        static string Generate()
+        {
+            int L = 35;
+            char[] A = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
+                'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
+                'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+            char[] generatedChar = new char[L];
+            int x;
             Random r = new Random();
-            string s = "";
-            while (s.Length < 6)
+            for (int i = 0; i < L; i++)
             {
-                s += (char)r.Next(char.MaxValue);
+                x = r.Next(A.Length - 1);
+                generatedChar[i] = A[x];
             }
-            return s;
+            string generated = "";
+            for (int i = 0; i < generatedChar.Length; i++)
+            {
+                generated += generatedChar[i];
+            }
+            return generated;
         }
         private async void SaveTest(object testObject)
         {
             Test friend = testObject as Test;
             if (friend.Code == null)
             {
-                friend.Code = GetHash(GenerateString());
+                friend.Code = Generate();
             }
             TestCode = friend.Code;
             friend.Questions = Questions.ToList();
