@@ -33,8 +33,32 @@ namespace TeCon.Views
                 isNotConnection.IsVisible = false;
                 await ViewModel.GetVarients();
                 base.OnAppearing();
+                CheckLang();
             }
             else isNotConnection.IsVisible = true;
+        }
+        private void CheckLang()
+        {
+            if (ViewModel.SelectedLanguage == "English")
+            {
+                QUESTIONS.Text = "Questions of test";
+                buttonNew.Text = "Create variant";
+                buttonEnd1.Text = "Save question";
+                buttonDelete1.Text = "Delete question";
+                LOADING.Text = "Loading...";
+                INTERNET_ERROR.Text = "Something wrong. Check your internet access";
+                buttonBack1.Text = "Back";
+            }
+            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            {
+                QUESTIONS.Text = "Вопросы теста";
+                buttonNew.Text = "Создать вариант ответа";
+                buttonEnd1.Text = "Сохранить вопрос";
+                buttonDelete1.Text = "Удалить вопрос";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Нет подключения";
+                buttonBack1.Text = "Назад";
+            }
         }
     }
 }

@@ -32,10 +32,32 @@ namespace TeCon.Views
                 base.OnAppearing();
             }
             else isNotConnection.IsVisible = true;
+            CheckLang();
         }
         private async void testList_Refreshing(object sender, EventArgs e)
         {
             await ViewModel.GetFriends();
+        }
+        private void CheckLang()
+        {
+            if (ViewModel.SelectedLanguage == "English")
+            {
+                TESTS.Text = "Your tests";
+                CREATE_TEST.Text = "Create new test";
+                buttonToMain.Text = "Change account";
+                LOADING.Text = "Loading...";
+                INTERNET_ERROR.Text = "Something wrong. Check your internet access";
+                buttonSwapLang.Text = "Swap language";
+            }
+            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            {
+                TESTS.Text = "Ваши тесты";
+                CREATE_TEST.Text = "Создать новый тест";
+                buttonToMain.Text = "Сменить аккаунт";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Нет подключения";
+                buttonSwapLang.Text = "Сменить язык";
+            }
         }
     }
 }

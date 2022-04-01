@@ -30,6 +30,7 @@ namespace TeCon.ViewModels
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
         public ObservableCollection<Varient> Varients { get; set; }
+        public ObservableCollection<string> Languages { get; set; }
         public User User { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,7 +51,10 @@ namespace TeCon.ViewModels
         public ICommand BackCommand { protected set; get; }
         public ICommand CopyCommand { protected set; get; }
 
+        public ICommand LanguageCommand { protected set; get; }
+
         Test selectedTest { get; set; }
+        string selectedLanguage = "English"; 
         Question selectedQuestion { get; set; }
         Question postSelectedQuestion { get; set; }
         Varient selectedVarient { get; set; }
@@ -109,6 +113,31 @@ namespace TeCon.ViewModels
             UserCreateCommand = new Command(UserCreate);
             BackCommand = new Command(Back);
             CopyCommand = new Command(CopyMethod);
+            LanguageCommand = new Command(LanguageMethod);
+            Languages = new ObservableCollection<string>() { "English", "Русский (Россия)" };
+        }
+        #endregion
+        #region Localization
+        protected void LanguageMethod()
+        {
+            Navigation.PushModalAsync(new Language(this));
+        }
+        public string SelectedLanguage
+        {
+            get
+            {
+                return selectedLanguage;
+            }
+            set
+            {
+                if (selectedLanguage != null)
+                {
+                    selectedLanguage = value;
+                    Navigation.PopModalAsync();
+                }
+                else selectedLanguage = "English";
+                OnPropertyChanged("SelectedLanguage");
+            }
         }
         #endregion
         #region LoadedRegion & SelectedObjects
@@ -243,7 +272,7 @@ namespace TeCon.ViewModels
         #region Creating and Logging
         private void NewLogin()
         {
-            Navigation.PushModalAsync(new Login(new User()));
+            Navigation.PushModalAsync(new Login(new User(), this));
         }
         private async void UserIn(object User)
         {
@@ -271,7 +300,7 @@ namespace TeCon.ViewModels
                 }
                 IsBusy = false;
             }
-            await Navigation.PushModalAsync(new Login(new User()));
+            await Navigation.PushModalAsync(new Login(new User(), this));
         }
         private void Registr()
         {
@@ -489,7 +518,7 @@ namespace TeCon.ViewModels
             friend.Questions = Questions.ToList();
             if (friend.Name == "")
                 friend.Name = "Неназванный тест";
-            if (friend != null)
+            if (friend != null && activeUser != null)
             {
                 friend.UserId = activeUser.Id;
                 IsBusy = true;
@@ -727,4 +756,3 @@ namespace TeCon.ViewModels
         #endregion
     }
 }
- 

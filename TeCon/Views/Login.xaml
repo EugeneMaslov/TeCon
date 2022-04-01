@@ -3,47 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:TeCon.Views"
              x:Class="TeCon.Views.Login">
-    <StackLayout>
-            <StackLayout.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#9A69A2"
-                          Offset="0.1" />
-                    <GradientStop Color="#312134"
-                          Offset="1.0" />
-                </LinearGradientBrush>
-            </StackLayout.Background>
-            <Frame Padding="24" CornerRadius="0">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
-                </StackLayout>
-                <Frame.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#280C2D"
-                          Offset="0.1" />
-                        <GradientStop Color="#9A69A2"
-                          Offset="1.0" />
-                    </LinearGradientBrush>
-                </Frame.Background>
-            </Frame>
-            <Label Text="Вход" HorizontalOptions="Center" FontSize="28" TextColor="White" />
-            <Label Text="Логин:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
-        <Label Text="Пароль:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" IsPassword="True" TextColor="White"/>
-            <StackLayout IsVisible="{Binding IsVerify}">
-                <Label  Text="Пользователь не найден!" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"></Label>
+    <StackLayout BackgroundColor="#484663">
+        <Frame Padding="24" CornerRadius="0" BackgroundColor="#04394e">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Image Source="icon.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+                <Label HorizontalTextAlignment="Start" FontSize="40" FontFamily="Rockwell">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{x:Static local:App.HEADER}"  TextColor="#839784"></Span>
+                            <Span Text="{x:Static local:App.HEADER1}"  TextColor="#2d3a2e"></Span>
+                            <Span Text="{x:Static local:App.HEADER2}"  TextColor="#839784"></Span>
+                            <Span Text="{x:Static local:App.HEADER3}"  TextColor="#2d3a2e"></Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Image Source="TeDevelopment.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
             </StackLayout>
-            <StackLayout IsVisible="{Binding IsBusy}"
+        </Frame>
+        <Label x:Name="LOG_IN" Text="Log in" HorizontalOptions="Center" FontSize="28" FontFamily="Rockwell" TextColor="White" />
+        <Label x:Name="LOG_IN_TEXT" Text="Login:" HorizontalOptions="Center" FontSize="14" FontFamily="Rockwell" TextColor="White" />
+        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White" FontFamily="Rockwell"/>
+        <Label x:Name="PASSWORD" Text="Password:" HorizontalOptions="Center" FontSize="14" TextColor="White" FontFamily="Rockwell"/>
+        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" FontFamily="Rockwell" IsPassword="True" TextColor="White"/>
+        <StackLayout IsVisible="{Binding IsVerify}">
+            <Label x:Name="USER_NOT_FOUND"  Text="User not found!" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"></Label>
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
-                <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
-                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
-                </ActivityIndicator>
-            </StackLayout>
+            <Label x:Name="LOADING" Text="Loading..." FontFamily="Rockwell" TextColor="Gray" HorizontalOptions="Center" />
+            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="MediumVioletRed" >
+            </ActivityIndicator>
+        </StackLayout>
         <StackLayout IsVisible="false" x:Name="isNotConnection">
-            <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            <Label x:Name="INTERNET_ERROR" Text="Something wrong. Check your internet access" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
         </StackLayout>
-        <Button Text="Войти" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Удалить аккаунт" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Создать аккаунт" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-        </StackLayout>
+        <Button Text="Log in" FontFamily="Rockwell" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill" VerticalOptions="End"/>
+        <Button Text="Delete account" FontFamily="Rockwell" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+        <Button Text="Create account" FontFamily="Rockwell" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+        <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding LanguageCommand}" CommandParameter="{Binding User}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+    </StackLayout>
 </ContentPage>

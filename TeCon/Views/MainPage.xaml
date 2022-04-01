@@ -4,53 +4,50 @@
              xmlns:local="clr-namespace:TeCon.Views"
              x:Class="TeCon.Views.MainPage">
     <ContentPage.Content>
-        <StackLayout>
-        <StackLayout.Background>
-            <LinearGradientBrush EndPoint="0,1">
-                <GradientStop Color="#9A69A2"
-                          Offset="0.1" />
-                <GradientStop Color="#312134"
-                          Offset="1.0" />
-            </LinearGradientBrush>
-        </StackLayout.Background>
-        <Frame Padding="24" CornerRadius="0">
-            <StackLayout Orientation="Horizontal">
-                <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
-            </StackLayout>
-            <Frame.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#280C2D"
-                          Offset="0.1" />
-                    <GradientStop Color="#9A69A2"
-                          Offset="1.0" />
-                </LinearGradientBrush>
-            </Frame.Background>
-        </Frame>
-        <ListView x:Name="testList" ItemsSource="{Binding Tests}" Refreshing="testList_Refreshing"
+        <StackLayout BackgroundColor="#484663">
+            <Frame Padding="24" CornerRadius="0" BackgroundColor="#04394e">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image Source="icon.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+                    <Label HorizontalTextAlignment="Start" FontSize="40" FontFamily="Rockwell">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static local:App.HEADER}"  TextColor="#839784"></Span>
+                                <Span Text="{x:Static local:App.HEADER1}"  TextColor="#2d3a2e"></Span>
+                                <Span Text="{x:Static local:App.HEADER2}"  TextColor="#839784"></Span>
+                                <Span Text="{x:Static local:App.HEADER3}"  TextColor="#2d3a2e"></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Image Source="TeDevelopment.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+                </StackLayout>
+            </Frame>
+            <Label x:Name="TESTS" Text="Tests" HorizontalOptions="Center" FontSize="28" FontFamily="Rockwell" TextColor="White" />
+            <ListView x:Name="testList" ItemsSource="{Binding Tests}" Refreshing="testList_Refreshing"
               SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.View>
-                            <StackLayout>
-                                <Label Text="{Binding Name}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                            </StackLayout>
-                        </ViewCell.View>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <StackLayout IsVisible="{Binding IsBusy}"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout>
+                                    <Label FontFamily="Rockwell" Text="{Binding Path=Name}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout IsVisible="{Binding IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
-            <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
-            <ActivityIndicator IsRunning="{Binding IsBusy}" Color="Red" >
-            </ActivityIndicator>
+                <Label x:Name="LOADING" Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="MediumVioletRed" >
+                </ActivityIndicator>
+            </StackLayout>
+            <StackLayout IsVisible="false" x:Name="isNotConnection">
+                <Label x:Name="INTERNET_ERROR" Text="Нет соединения" FontFamily="Rockwell" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+            </StackLayout>
+            <Button x:Name="CREATE_TEST" FontFamily="Rockwell" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Смена аккаунта" FontFamily="Rockwell" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding Path=LanguageCommand}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
         </StackLayout>
-        <StackLayout IsVisible="false" x:Name="isNotConnection">
-            <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
-        </StackLayout>
-        <Button x:Name="button1" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Смена аккаунта" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
-    </StackLayout>
     </ContentPage.Content>
 </ContentPage>

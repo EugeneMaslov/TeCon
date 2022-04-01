@@ -24,5 +24,31 @@ namespace TeCon.Views
             Varient = varient;
             this.BindingContext = this;
         }
+        protected override async void OnAppearing()
+        {
+            CheckLang();
+        }
+
+        private void CheckLang()
+        {
+            if (ViewModel.SelectedLanguage == "English")
+            {
+                VARIANT_TEXT.Text = "Variant";
+                buttonEndVariant.Text = "Save variant";
+                DeleteVariant.Text = "Delete variant";
+                LOADING.Text = "Loading...";
+                INTERNET_ERROR.Text = "Something wrong. Check your internet access";
+                buttonBack.Text = "Back";
+            }
+            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            {
+                VARIANT_TEXT.Text = "Вариант ответа";
+                buttonEndVariant.Text = "Сохранить вариант";
+                DeleteVariant.Text = "Удалить вариант";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Нет подключения";
+                buttonBack.Text = "Назад";
+            }
+        }
     }
 }

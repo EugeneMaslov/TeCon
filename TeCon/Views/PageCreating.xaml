@@ -4,31 +4,28 @@
              xmlns:local="clr-namespace:TeCon.Views"
              x:Class="TeCon.Views.Page1">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#9A69A2"
-                          Offset="0.1" />
-                    <GradientStop Color="#312134"
-                          Offset="1.0" />
-                </LinearGradientBrush>
-            </StackLayout.Background>
-            <Frame Padding="24" CornerRadius="0">
-                <Label Text="{x:Static local:App.HEADER}" HorizontalTextAlignment="Start" TextColor="White" FontSize="52"/>
-                <Frame.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#280C2D"
-                          Offset="0.1" />
-                        <GradientStop Color="#9A69A2"
-                          Offset="1.0" />
-                    </LinearGradientBrush>
-                </Frame.Background>
+        <StackLayout BackgroundColor="#484663">
+            <Frame Padding="24" CornerRadius="0" BackgroundColor="#04394e">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image Source="icon.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+                    <Label HorizontalTextAlignment="Start" FontSize="40" FontFamily="Rockwell">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{x:Static local:App.HEADER}"  TextColor="#839784"></Span>
+                                <Span Text="{x:Static local:App.HEADER1}"  TextColor="#2d3a2e"></Span>
+                                <Span Text="{x:Static local:App.HEADER2}"  TextColor="#839784"></Span>
+                                <Span Text="{x:Static local:App.HEADER3}"  TextColor="#2d3a2e"></Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Image Source="TeDevelopment.png" WidthRequest="50" HeightRequest="50" BackgroundColor="Transparent"/>
+                </StackLayout>
             </Frame>
-            <Label Text="Название теста" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=Test.Name}" TextColor="White"/>
-            <Label Text="Код теста: " HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" IsReadOnly="True" HeightRequest="40" FontSize="14" Text="{Binding Path=Test.Code}" TextColor="White"/>
-            <Button Text="Копировать код" x:Name="buttonCopy" Command="{Binding Path=ViewModel.CopyCommand}" TextColor="White" FontSize="15" BackgroundColor="#" HeightRequest="30" WidthRequest="200" HorizontalOptions="CenterAndExpand" />
+            <Label x:Name="NAME_TEST_TEXT" FontFamily="Rockwell" Text="Название теста" HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry x:Name="NAME" FontFamily="Rockwell" BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=Test.Name}" TextColor="White"/>
+            <Label x:Name="CODE_TEST_TEXT" FontFamily="Rockwell" Text="Код теста: " HorizontalOptions="Center" FontSize="14" TextColor="White" />
+            <Entry x:Name="CODE" FontFamily="Rockwell" BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" IsReadOnly="True" HeightRequest="40" FontSize="14" Text="{Binding Path=Test.Code}" TextColor="White"/>
+            <Button FontFamily="Rockwell" Text="Копировать код" x:Name="buttonCopy" Command="{Binding Path=ViewModel.CopyCommand}" TextColor="White" FontSize="15" BackgroundColor="#" HeightRequest="50" WidthRequest="200" HorizontalOptions="CenterAndExpand" />
             <ListView x:Name="testList" ItemsSource="{Binding ViewModel.Questions}"
               SelectedItem="{Binding ViewModel.SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True">
                 <ListView.ItemTemplate>
@@ -36,26 +33,26 @@
                         <ViewCell>
                             <ViewCell.View>
                                 <StackLayout>
-                                    <Label Text="{Binding OQuestion}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Label Text="{Binding OQuestion}" FontFamily="Rockwell" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackLayout IsVisible="{Binding ViewModel.IsBusy}"
+            <StackLayout IsVisible="{Binding IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
-                <Label Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
-                <ActivityIndicator IsRunning="{Binding ViewModel.IsBusy}" Color="Red" >
+                <Label x:Name="LOADING" Text="Loading..." FontFamily="Rockwell" TextColor="Gray" HorizontalOptions="Center" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="MediumVioletRed" >
                 </ActivityIndicator>
             </StackLayout>
             <StackLayout IsVisible="false" x:Name="isNotConnection">
-                <Label Text="Нет соединения" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
+                <Label x:Name="INTERNET_ERROR" Text="Something wrong. Check your internet access" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button Text="Сохранить" x:Name="buttonSave" Command="{Binding ViewModel.SaveTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Удалить тест" x:Name="buttonDelete" Command="{Binding ViewModel.DeleteTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Создать вопрос" x:Name="buttonQuest" Command="{Binding ViewModel.CreateQuestionCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button FontFamily="Rockwell" Text="Сохранить" x:Name="buttonSave" Command="{Binding ViewModel.SaveTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" Text="Удалить тест" x:Name="buttonDelete" Command="{Binding ViewModel.DeleteTestCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" Text="Создать вопрос" x:Name="buttonQuest" Command="{Binding ViewModel.CreateQuestionCommand}" CommandParameter="{Binding Test}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" Text="Назад" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
