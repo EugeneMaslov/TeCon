@@ -18,15 +18,15 @@ namespace TeCon.ViewModels
     public class TestListViewModel : INotifyPropertyChanged
     {
         #region Initialization
-        bool initialized = false;   // была ли начальная инициализация
+        private bool initialized;   // была ли начальная инициализация
         private bool isBusy;    // идет ли загрузка с сервера
         private bool isVerify; // верификация
-        private bool isNull = false;
+        private bool isNull;
         protected string selectedLanguage = "English";
-        TestsService testsService = new TestsService();
-        QuestionsService questionsService = new QuestionsService();
-        VarientsService varientsService = new VarientsService();
-        LoginService loginService = new LoginService();
+        private TestsService testsService;
+        private QuestionsService questionsService;
+        private VarientsService varientsService;
+        private LoginService loginService;
 
         public string TestCode { get; set; }
         public ObservableCollection<Test> Tests { get; set; }
@@ -94,6 +94,11 @@ namespace TeCon.ViewModels
 
         public TestListViewModel()
         {
+            initialized = false;
+            testsService = new TestsService();
+            questionsService = new QuestionsService();
+            varientsService = new VarientsService();
+            loginService = new LoginService();
             Tests = new ObservableCollection<Test>();
             Questions = new ObservableCollection<Question>();
             Varients = new ObservableCollection<Varient>();
@@ -271,8 +276,7 @@ namespace TeCon.ViewModels
         }
         protected void OnPropertyChanged(string propName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
         #endregion
         #region Creating and Logging
@@ -318,8 +322,7 @@ namespace TeCon.ViewModels
         }
         private async void UserCreate(object userObject)
         {
-            User user = userObject as User;
-            if (user != null)
+            if (userObject is User user)
             {
                 if ((user.Login != null && user.Email != null && user.Password != null) && (user.Login != "" && user.Email != "" && user.Password != ""))
                 {
@@ -362,15 +365,19 @@ namespace TeCon.ViewModels
         }
         private void CreateTest()
         {
-            selectedTest = new Test();
-            selectedTest.Name = "";
+            selectedTest = new Test
+            {
+                Name = ""
+            };
             Questions.Clear();
             Navigation.PushModalAsync(new Page1(selectedTest, this));
         }
         private void CreateQuestion()
         {
-            selectedQuestion = new Question();
-            selectedQuestion.OQuestion = "";
+            selectedQuestion = new Question
+            {
+                OQuestion = ""
+            };
             Varients.Clear();
             Navigation.PushModalAsync(new PageQuestConst(0, selectedQuestion, this));
         }
@@ -396,7 +403,11 @@ namespace TeCon.ViewModels
                         IsBusy = false;
                         return true;
                     }
-                    else return false;
+                    else
+                    {
+                        IsBusy = false;
+                        return false;
+                    }
                 }
             }
             IsBusy = false;
@@ -565,8 +576,7 @@ namespace TeCon.ViewModels
         }
         private async Task SaveTestNotBack(object testObject)
         {
-            Test friend = testObject as Test;
-            if (friend != null)
+            if (testObject is Test friend)
             {
                 if (friend.Code == null)
                 {
@@ -611,12 +621,12 @@ namespace TeCon.ViewModels
             {
                 friend = testObject as Question;
             }
-            else 
+            else
             {
                 friend = testObject as Question;
                 friend.Id = selectedQuestion.Id;
                 friend.TestId = selectedQuestion.TestId;
-            } 
+            }
             if (friend.OQuestion == "")
                 friend.OQuestion = "Неназванный вопрос";
             friend.Varients = Varients.ToList();
@@ -656,8 +666,7 @@ namespace TeCon.ViewModels
         }
         private async Task SaveQuestionNotBack(object testObject)
         {
-            Question friend = testObject as Question;
-            if (friend != null)
+            if (testObject is Question friend)
             {
                 if (selectedTest.Id == 0)
                 {
@@ -696,8 +705,7 @@ namespace TeCon.ViewModels
         }
         private async void SaveVarient(object varientObject)
         {
-            Varient friend = varientObject as Varient;
-            if (friend != null)
+            if (varientObject is Varient friend)
             {
                 if (selectedQuestion.Id == 0)
                 {
@@ -734,8 +742,7 @@ namespace TeCon.ViewModels
         #region Deleting
         private async void DeleteTest(object friendObject)
         {
-            Test friend = friendObject as Test;
-            if (friend != null)
+            if (friendObject is Test friend)
             {
                 IsBusy = true;
                 Test deletedFriend = await testsService.Delete(friend.Id);
@@ -751,8 +758,7 @@ namespace TeCon.ViewModels
         }
         private async void DeleteQuestion(object friendObject)
         {
-            Question friend = friendObject as Question;
-            if (friend != null)
+            if (friendObject is Question friend)
             {
                 IsBusy = true;
                 Question deletedFriend = await questionsService.Delete(friend.Id);
@@ -768,8 +774,7 @@ namespace TeCon.ViewModels
         }
         private async void DeleteVarient(object friendObject)
         {
-            Varient friend = friendObject as Varient;
-            if (friend != null)
+            if (friendObject is Varient friend)
             {
                 IsBusy = true;
                 Varient deletedFriend = await varientsService.Delete(friend.Id);

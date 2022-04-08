@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Collections.ObjectModel;
-using TeCon.ViewModels;
+﻿using System.Collections.Generic;
 
 namespace TeCon.Models
 {

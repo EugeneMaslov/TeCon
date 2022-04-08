@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using TeCon.Models;
 using TeCon.ViewModels;
 using Xamarin.Essentials;
-using System.Collections.ObjectModel;
-using Xamarin.Forms.Xaml;
-using TeCon.Models;
+using Xamarin.Forms;
 
 namespace TeCon.Views
 {
@@ -23,7 +15,7 @@ namespace TeCon.Views
             this.User = User;
             if (viewModel == null)
             {
-               ViewModel = new TestListViewModel() { Navigation = this.Navigation };
+                ViewModel = new TestListViewModel() { Navigation = this.Navigation };
             }
             else ViewModel = viewModel;
             BindingContext = ViewModel;

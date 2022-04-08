@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
+using TeCon.Models;
+using TeCon.ViewModels;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using TeCon.ViewModels;
-using TeCon.Models;
-using Xamarin.Essentials;
 
 namespace TeCon.Views
 {

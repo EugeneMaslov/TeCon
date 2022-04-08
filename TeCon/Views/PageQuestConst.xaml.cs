@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TeCon.Models;
+﻿using TeCon.Models;
 using TeCon.ViewModels;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -18,7 +12,7 @@ namespace TeCon.Views
         public int TestId { get; private set; }
         public Question Question { get; private set; }
         public TestListViewModel ViewModel { get; private set; }
-        public PageQuestConst(int testId ,Question question, TestListViewModel viewModel)
+        public PageQuestConst(int testId, Question question, TestListViewModel viewModel)
         {
             InitializeComponent();
             TestId = testId;

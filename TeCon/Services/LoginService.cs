@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TeCon.Models;
 
@@ -12,7 +10,7 @@ namespace TeCon.Services
     class LoginService
     {
         const string Url = "https://teconservice.herokuapp.com/api/Account/";
-        JsonSerializerOptions options = new JsonSerializerOptions
+        readonly JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         };

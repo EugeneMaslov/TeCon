@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
 using TeCon.ViewModels;
 using Xamarin.Essentials;
-using System.Collections.ObjectModel;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace TeCon.Views
@@ -17,7 +11,7 @@ namespace TeCon.Views
     {
         public TestListViewModel ViewModel { get; private set; }
         public MainPage(TestListViewModel viewModel)
-        { 
+        {
             InitializeComponent();
             ViewModel = viewModel;
             this.BindingContext = ViewModel;

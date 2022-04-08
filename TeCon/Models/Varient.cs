@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TeCon.Models
+﻿namespace TeCon.Models
 {
     public class Varient
     {

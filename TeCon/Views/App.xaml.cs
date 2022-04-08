@@ -1,7 +1,5 @@
-﻿using System;
-using TeCon.Models;
+﻿using TeCon.Models;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace TeCon.Views
 {
