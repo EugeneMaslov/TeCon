@@ -23,12 +23,12 @@
             </Frame>
             <Label x:Name="TESTS" Text="Tests" HorizontalOptions="Center" FontSize="28" FontFamily="Rockwell" TextColor="White" />
             <ListView x:Name="testList" ItemsSource="{Binding Tests}" Refreshing="testList_Refreshing"
-              SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True">
+              SelectedItem="{Binding SelectedTest, Mode=TwoWay}" HasUnevenRows="True" VerticalScrollBarVisibility="Never">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout>
+                                <StackLayout BackgroundColor="#42406c" Padding="10">
                                     <Label FontFamily="Rockwell" Text="{Binding Path=Name}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="28" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
                             </ViewCell.View>
@@ -45,9 +45,9 @@
             <StackLayout IsVisible="false" x:Name="isNotConnection">
                 <Label x:Name="INTERNET_ERROR" Text="Нет соединения" FontFamily="Rockwell" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button x:Name="CREATE_TEST" FontFamily="Rockwell" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill"/>
-            <Button Text="Смена аккаунта" FontFamily="Rockwell" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
-            <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding Path=LanguageCommand}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button x:Name="CREATE_TEST" FontFamily="Rockwell" Text="Создать новый тест" Command="{Binding CreateTestCommand}"  IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" HorizontalOptions="Fill"/>
+            <Button Text="Смена аккаунта" FontFamily="Rockwell" x:Name="buttonToMain" Command="{Binding Path=LoginCommand}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" HorizontalOptions="Fill" />
+            <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding Path=LanguageCommand}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" HorizontalOptions="Fill" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

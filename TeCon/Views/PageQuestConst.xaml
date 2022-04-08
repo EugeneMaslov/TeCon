@@ -22,16 +22,16 @@
                 </StackLayout>
             </Frame>
             <Label FontFamily="Rockwell" x:Name="QUESTIONS" Text="Введите вопрос:" HorizontalTextAlignment="Center" TextColor="White" FontSize="14"/>
-            <Entry FontFamily="Rockwell" PlaceholderColor="#" BackgroundColor="#" HorizontalTextAlignment="Center" FontSize="30" Text="{Binding Path=Question.OQuestion}" TextColor="White"/>
+            <Entry FontFamily="Rockwell" PlaceholderColor="#" BackgroundColor="#42406c" HorizontalTextAlignment="Center" FontSize="30" Text="{Binding Path=Question.OQuestion}" TextColor="White"/>
             <ListView x:Name="testList" ItemsSource="{Binding ViewModel.Varients}"
-              SelectedItem="{Binding ViewModel.SelectedVarient, Mode=TwoWay}" HasUnevenRows="True">
+              SelectedItem="{Binding ViewModel.SelectedVarient, Mode=TwoWay}" HasUnevenRows="True" VerticalScrollBarVisibility="Never">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="10">
                                     <Label FontFamily="Rockwell" Text="{Binding OVarient}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                    <Switch IsToggled="{Binding IsTrue}" IsEnabled="False" OnColor="#2d3a2e" ThumbColor="#2d3a2e" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                                    <Switch IsToggled="{Binding IsTrue}" IsEnabled="False" OnColor="#333154" ThumbColor="#333154" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>
@@ -47,10 +47,10 @@
             <StackLayout IsVisible="false" x:Name="isNotConnection">
                 <Label x:Name="INTERNET_ERROR" Text="Something wrong. Check your internet access" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button FontFamily="Rockwell" x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding ViewModel.CreateVarientCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button FontFamily="Rockwell" x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ViewModel.SaveQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button FontFamily="Rockwell" x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ViewModel.DeleteQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="50" HorizontalOptions="Fill"/>
-            <Button FontFamily="Rockwell" x:Name="buttonBack1" Text="Назад" Command="{Binding Path=ViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button FontFamily="Rockwell" x:Name="buttonNew" Text="Создать вариант ответа" Command="{Binding ViewModel.CreateVarientCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" x:Name="buttonEnd1" Text="Сохранить вопрос" Command="{Binding ViewModel.SaveQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" x:Name="buttonDelete1" Text="Удалить вопрос" Command="{Binding ViewModel.DeleteQuestionCommand}" CommandParameter="{Binding Question}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="50" HorizontalOptions="Fill"/>
+            <Button FontFamily="Rockwell" x:Name="buttonBack1" Text="Назад" Command="{Binding Path=ViewModel.BackCommand}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

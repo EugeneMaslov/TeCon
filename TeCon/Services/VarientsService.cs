@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TeCon.Models;
 
-namespace TeCon
+namespace TeCon.Services
 {
-    class LoginService
+    class VarientsService
     {
-        const string Url = "https://teconservice.herokuapp.com/api/Account/";
+        const string Url = "https://teconservice.herokuapp.com/api/Varients/";
         JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -22,48 +22,53 @@ namespace TeCon
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             return client;
         }
-        public async Task<IEnumerable<User>> Get()
+        public async Task<IEnumerable<Varient>> GetVarientByQuestId(int id)
         {
             HttpClient client = GetClient();
-            string result = await client.GetStringAsync(Url);
-            return JsonSerializer.Deserialize<IEnumerable<User>>(result, options);
+            var x = await client.GetAsync(Url + id);
+            if (x.IsSuccessStatusCode)
+            {
+                string result = await client.GetStringAsync(Url + id);
+                return JsonSerializer.Deserialize<IEnumerable<Varient>>(result, options);
+            }
+            else return null;
         }
-        public async Task<User> Add(User user)
+        public async Task<Varient> Add(Varient varient)
         {
             HttpClient client = GetClient();
             var response = await client.PostAsync(Url,
                 new StringContent(
-                    JsonSerializer.Serialize(user),
+                    JsonSerializer.Serialize(varient),
                     Encoding.UTF8, "application/json"));
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<User>(
+            return JsonSerializer.Deserialize<Varient>(
                 await response.Content.ReadAsStringAsync(), options);
         }
-        public async Task<User> Update(User user)
+        public async Task<Varient> Update(Varient varient)
         {
             HttpClient client = GetClient();
             var response = await client.PutAsync(Url,
                 new StringContent(
-                    JsonSerializer.Serialize(user),
+                    JsonSerializer.Serialize(varient),
                     Encoding.UTF8, "application/json"));
 
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<User>(
+            return JsonSerializer.Deserialize<Varient>(
                 await response.Content.ReadAsStringAsync(), options);
         }
-        public async Task<User> Delete(int id)
+        public async Task<Varient> Delete(int id)
         {
             HttpClient client = GetClient();
             var response = await client.DeleteAsync(Url + id);
             if (response.StatusCode != HttpStatusCode.OK)
                 return null;
 
-            return JsonSerializer.Deserialize<User>(
+            return JsonSerializer.Deserialize<Varient>(
                await response.Content.ReadAsStringAsync(), options);
         }
     }

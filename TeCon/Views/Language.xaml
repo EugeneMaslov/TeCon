@@ -23,12 +23,12 @@
             </Frame>
             <Label x:Name="Lang" Text="Language:" HorizontalOptions="Center" FontSize="28" FontFamily="Rockwell" TextColor="White" />
             <ListView x:Name="langList" ItemsSource="{Binding Languages}"
-              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" HasUnevenRows="True">
+              SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" HasUnevenRows="False" VerticalScrollBarVisibility="Never">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <StackLayout>
+                                <StackLayout BackgroundColor="#42406c" Padding="10">
                                     <Label Text="{Binding}" FontFamily="Rockwell" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                 </StackLayout>
                             </ViewCell.View>
@@ -36,7 +36,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button FontFamily="Rockwell" Text="Back" x:Name="buttonBack" Command="{Binding Path=BackCommand}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button FontFamily="Rockwell" Text="Back" x:Name="buttonBack" Command="{Binding Path=BackCommand}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

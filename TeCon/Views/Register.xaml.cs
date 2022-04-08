@@ -50,7 +50,7 @@ namespace TeCon.Views
                 buttonSave.Text = "Save and log in";
                 buttonDeleteUser.Text = "Delete account";
                 buttonBack.Text = "Back";
-                buttonSwapLang.Text = "Swap language";
+                buttonSwapLang.Text = "Change language";
             }
             else if (ViewModel.SelectedLanguage == "Русский (Россия)")
             {

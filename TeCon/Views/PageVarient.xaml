@@ -22,10 +22,10 @@
                 </StackLayout>
             </Frame>
             <Label x:Name="VARIANT_TEXT" FontFamily="Rockwell" Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="14"></Label>
-            <Entry x:Name="textBox1" FontFamily="Rockwell" Text="{Binding Path=Varient.OVarient}" PlaceholderColor="#" BackgroundColor="#" HeightRequest="50" FontSize="30" TextColor="White" HorizontalTextAlignment="Center"/>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+            <Entry x:Name="textBox1" FontFamily="Rockwell" Text="{Binding Path=Varient.OVarient}" PlaceholderColor="#" BackgroundColor="#42406c" HeightRequest="50" FontSize="30" TextColor="White" HorizontalTextAlignment="Center"/>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="{x:Static local:App.IsTrueText}" FontFamily="Rockwell" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="20"/>
-                <Switch IsToggled="{Binding Varient.IsTrue}" OnColor="#2d3a2e" ThumbColor="#2d3a2e" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                <Switch IsToggled="{Binding Varient.IsTrue}" OnColor="#333154" ThumbColor="#333154" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout IsVisible="{Binding IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
@@ -36,9 +36,9 @@
             <StackLayout IsVisible="false" x:Name="isNotConnection">
                 <Label x:Name="INTERNET_ERROR" Text="Something wrong. Check your internet access" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button x:Name="buttonEndVariant" FontFamily="Rockwell" Text="Сохранить" Command="{Binding ViewModel.SaveVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button x:Name="DeleteVariant" Text="Удалить" FontFamily="Rockwell" Command="{Binding ViewModel.DeleteVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Назад" FontFamily="Rockwell" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button x:Name="buttonEndVariant" FontFamily="Rockwell" Text="Сохранить" Command="{Binding ViewModel.SaveVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button x:Name="DeleteVariant" Text="Удалить" FontFamily="Rockwell" Command="{Binding ViewModel.DeleteVarientCommand}" CommandParameter="{Binding Varient}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button Text="Назад" FontFamily="Rockwell" x:Name="buttonBack" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

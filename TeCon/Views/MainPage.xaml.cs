@@ -47,7 +47,7 @@ namespace TeCon.Views
                 buttonToMain.Text = "Change account";
                 LOADING.Text = "Loading...";
                 INTERNET_ERROR.Text = "Something wrong. Check your internet access";
-                buttonSwapLang.Text = "Swap language";
+                buttonSwapLang.Text = "Change language";
             }
             else if (ViewModel.SelectedLanguage == "Русский (Россия)")
             {

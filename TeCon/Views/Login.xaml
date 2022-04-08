@@ -22,9 +22,9 @@
         </Frame>
         <Label x:Name="LOG_IN" Text="Log in" HorizontalOptions="Center" FontSize="28" FontFamily="Rockwell" TextColor="White" />
         <Label x:Name="LOG_IN_TEXT" Text="Login:" HorizontalOptions="Center" FontSize="14" FontFamily="Rockwell" TextColor="White" />
-        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White" FontFamily="Rockwell"/>
+        <Entry BackgroundColor="#42406c" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White" FontFamily="Rockwell"/>
         <Label x:Name="PASSWORD" Text="Password:" HorizontalOptions="Center" FontSize="14" TextColor="White" FontFamily="Rockwell"/>
-        <Entry BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" FontFamily="Rockwell" IsPassword="True" TextColor="White"/>
+        <Entry BackgroundColor="#42406c" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" FontFamily="Rockwell" IsPassword="True" TextColor="White"/>
         <StackLayout IsVisible="{Binding IsVerify}">
             <Label x:Name="USER_NOT_FOUND"  Text="User not found!" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"></Label>
         </StackLayout>
@@ -37,9 +37,9 @@
         <StackLayout IsVisible="false" x:Name="isNotConnection">
             <Label x:Name="INTERNET_ERROR" Text="Something wrong. Check your internet access" TextColor="White" FontFamily="Rockwell" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
         </StackLayout>
-        <Button Text="Log in" FontFamily="Rockwell" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill" VerticalOptions="End"/>
-        <Button Text="Delete account" FontFamily="Rockwell" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
-        <Button Text="Create account" FontFamily="Rockwell" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
-        <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding LanguageCommand}" CommandParameter="{Binding User}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+        <Button Text="Log in" FontFamily="Rockwell" x:Name="buttonSave" Command="{Binding UserInCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill" VerticalOptions="End"/>
+        <Button Text="Delete account" FontFamily="Rockwell" x:Name="buttonDeleteUser" Command="{Binding UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+        <Button Text="Create account" FontFamily="Rockwell" x:Name="buttonAddUser" Command="{Binding RegistrCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
+        <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding LanguageCommand}" CommandParameter="{Binding User}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"  VerticalOptions="End"/>
     </StackLayout>
 </ContentPage>

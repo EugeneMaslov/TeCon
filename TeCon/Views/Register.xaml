@@ -23,11 +23,11 @@
             </Frame>
             <Label FontFamily="Rockwell" x:Name="REGISTR" Text="Регистрация" HorizontalOptions="Center" FontSize="28" TextColor="White" />
             <Label FontFamily="Rockwell" x:Name="LOGIN" Text="Логин:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry FontFamily="Rockwell" BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
+            <Entry FontFamily="Rockwell" BackgroundColor="#42406c" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Login}" TextColor="White"/>
             <Label FontFamily="Rockwell" x:Name="EMAIL" Text="Е-mail:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry FontFamily="Rockwell" BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Email}" TextColor="White"/>
+            <Entry FontFamily="Rockwell" BackgroundColor="#42406c" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Email}" TextColor="White"/>
             <Label FontFamily="Rockwell" x:Name="PASSWORD" Text="Пароль:" HorizontalOptions="Center" FontSize="14" TextColor="White" />
-            <Entry FontFamily="Rockwell" BackgroundColor="#" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" IsPassword="True" TextColor="White"/>
+            <Entry FontFamily="Rockwell" BackgroundColor="#42406c" PlaceholderColor="#" HorizontalTextAlignment="Center" HeightRequest="50" FontSize="30" Text="{Binding Path=User.Password}" IsPassword="True" TextColor="White"/>
             <StackLayout IsVisible="{Binding ViewModel.IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">
                 <Label FontFamily="Rockwell" x:Name="LOADING" Text="Загрузка данных..." TextColor="Gray" HorizontalOptions="Center" />
@@ -40,10 +40,10 @@
             <StackLayout IsVisible="{Binding ViewModel.isNull}" x:Name="Null">
                 <Label FontFamily="Rockwell" x:Name="NOTHING_FIELD" Text="Ни одно из полей не может быть пустым!" TextColor="White" FontSize="14" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand"/>
             </StackLayout>
-            <Button Text="Сохранить и войти" FontFamily="Rockwell" x:Name="buttonSave" Command="{Binding ViewModel.UserCreateCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Удалить аккаунт" FontFamily="Rockwell" x:Name="buttonDeleteUser" Command="{Binding ViewModel.UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill"/>
-            <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding ViewModel.LanguageCommand}" CommandParameter="{Binding User}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="70" HorizontalOptions="Fill" />
-            <Button Text="Назад" x:Name="buttonBack" FontFamily="Rockwell" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
+            <Button Text="Сохранить и войти" FontFamily="Rockwell" x:Name="buttonSave" Command="{Binding ViewModel.UserCreateCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button Text="Удалить аккаунт" FontFamily="Rockwell" x:Name="buttonDeleteUser" Command="{Binding ViewModel.UserOutCommand}" CommandParameter="{Binding User}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill"/>
+            <Button Text="Swap language" FontFamily="Rockwell" x:Name="buttonSwapLang" Command="{Binding ViewModel.LanguageCommand}" CommandParameter="{Binding User}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="70" HorizontalOptions="Fill" />
+            <Button Text="Назад" x:Name="buttonBack" FontFamily="Rockwell" Command="{Binding Path=ViewModel.BackCommand}" IsEnabled="{Binding ViewModel.IsLoaded}" TextColor="White" FontSize="30" BackgroundColor="#333154" HeightRequest="100" WidthRequest="200" HorizontalOptions="StartAndExpand" VerticalOptions="EndAndExpand" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
