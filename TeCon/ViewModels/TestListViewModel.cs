@@ -29,6 +29,7 @@ namespace TeCon.ViewModels
         private LoginService loginService;
 
         public string TestCode { get; set; }
+        public ObservableCollection<Result> InstantResults { get; set; }
         public ObservableCollection<Test> Tests { get; set; }
         public ObservableCollection<Question> Questions { get; set; }
         public ObservableCollection<Varient> Varients { get; set; }
@@ -102,6 +103,7 @@ namespace TeCon.ViewModels
             Tests = new ObservableCollection<Test>();
             Questions = new ObservableCollection<Question>();
             Varients = new ObservableCollection<Varient>();
+            InstantResults = new ObservableCollection<Result>();
             User = new User();
             IsBusy = false;
             CreateTestCommand = new Command(CreateTest);
@@ -121,7 +123,7 @@ namespace TeCon.ViewModels
             BackCommand = new Command(Back);
             CopyCommand = new Command(CopyMethod);
             LanguageCommand = new Command(LanguageMethod);
-            Languages = new ObservableCollection<string>() { "English", "Русский (Россия)" };
+            Languages = new ObservableCollection<string>() { "English", "Русский", "Беларуская" };
         }
         #endregion
         #region Localization
@@ -175,7 +177,7 @@ namespace TeCon.ViewModels
                 {
                     if (value.Code == null)
                     {
-                        value.Code = Generate();
+                        value.Code = Generate(SelectedTest.Name);
                     }
                     Test tempTest = new Test()
                     {
@@ -502,9 +504,10 @@ namespace TeCon.ViewModels
         {
             Clipboard.SetTextAsync(TestCode);
         }
-        static string Generate()
+        static string Generate(string name)
         {
             int L = 35;
+            char[] G = name.ToCharArray().Where(p => p != ' ').ToArray();
             char[] A = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
                 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
                 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
@@ -513,10 +516,23 @@ namespace TeCon.ViewModels
             char[] generatedChar = new char[L];
             int x;
             Random r = new Random();
+            Random k = new Random();
+            int temp;
             for (int i = 0; i < L; i++)
             {
-                x = r.Next(A.Length - 1);
-                generatedChar[i] = A[x];
+                temp = k.Next(2);
+                x = A.Length / 2;
+                generatedChar[i] = A[A.Length / 2];
+                if (temp == 0)
+                {
+                    x = r.Next(A.Length);
+                    generatedChar[i] = A[x];
+                }
+                else if (temp == 1)
+                {
+                    x = r.Next(G.Length);
+                    generatedChar[i] = G[x];
+                }
             }
             string generated = "";
             for (int i = 0; i < generatedChar.Length; i++)
@@ -541,7 +557,7 @@ namespace TeCon.ViewModels
             IsBusy = true;
             if (friend.Code == null)
             {
-                friend.Code = Generate();
+                friend.Code = Generate(friend.Name);
             }
             TestCode = friend.Code;
             friend.Questions = Questions.ToList();
@@ -580,7 +596,7 @@ namespace TeCon.ViewModels
             {
                 if (friend.Code == null)
                 {
-                    friend.Code = Generate();
+                    friend.Code = Generate(friend.Name);
                 }
                 if (friend.Name == "")
                     friend.Name = "Неназванный тест";

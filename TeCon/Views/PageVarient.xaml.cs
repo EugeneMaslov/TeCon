@@ -34,8 +34,9 @@ namespace TeCon.Views
                 LOADING.Text = "Loading...";
                 INTERNET_ERROR.Text = "Something wrong. Check your internet access";
                 buttonBack.Text = "Back";
+                TRUE_VARIANT.Text = "True variant";
             }
-            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            else if (ViewModel.SelectedLanguage == "Русский")
             {
                 VARIANT_TEXT.Text = "Вариант ответа";
                 buttonEndVariant.Text = "Сохранить вариант";
@@ -43,6 +44,17 @@ namespace TeCon.Views
                 LOADING.Text = "Загрузка...";
                 INTERNET_ERROR.Text = "Нет подключения";
                 buttonBack.Text = "Назад";
+                TRUE_VARIANT.Text = "Правильный ответ";
+            }
+            else if (ViewModel.SelectedLanguage == "Беларуская")
+            {
+                VARIANT_TEXT.Text = "Варыянт адказу";
+                buttonEndVariant.Text = "Захаваць варыянт";
+                DeleteVariant.Text = "Выдаліць варыянт";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Няма падключэння";
+                buttonBack.Text = "Назад";
+                TRUE_VARIANT.Text = "Правільны адказ";
             }
         }
     }

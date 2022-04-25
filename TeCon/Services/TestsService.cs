@@ -10,7 +10,7 @@ namespace TeCon.Services
 {
     public class TestsService
     {
-        const string Url = "https://teconservice.herokuapp.com/api/Tests/";
+        const string Url = "https://tedevelopment.herokuapp.com/api/Tests/";
         readonly JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

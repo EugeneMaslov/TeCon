@@ -21,13 +21,13 @@ namespace TeCon.Views
         }
         protected override async void OnAppearing()
         {
+            CheckLang();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 isNotConnection.IsVisible = false;
                 await ViewModel.GetQuestions();
                 ViewModel.SelectedQuestion = null;
                 base.OnAppearing();
-                CheckLang();
             }
             else isNotConnection.IsVisible = true;
         }
@@ -45,7 +45,7 @@ namespace TeCon.Views
                 INTERNET_ERROR.Text = "Something wrong. Check your internet access";
                 buttonBack.Text = "Back";
             }
-            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            else if (ViewModel.SelectedLanguage == "Русский")
             {
                 NAME_TEST_TEXT.Text = "Название теста";
                 CODE_TEST_TEXT.Text = "Код теста";
@@ -55,6 +55,18 @@ namespace TeCon.Views
                 buttonQuest.Text = "Создать вопрос";
                 LOADING.Text = "Загрузка...";
                 INTERNET_ERROR.Text = "Нет подключения";
+                buttonBack.Text = "Назад";
+            }
+            else if (ViewModel.SelectedLanguage == "Беларуская")
+            {
+                NAME_TEST_TEXT.Text = "Назва тэста";
+                CODE_TEST_TEXT.Text = "Код тэста";
+                buttonCopy.Text = "Скапіяваць";
+                buttonSave.Text = "Захаваць";
+                buttonDelete.Text = "Выдаліць тэст";
+                buttonQuest.Text = "Стварыць пытанне";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Няма падключэння";
                 buttonBack.Text = "Назад";
             }
         }

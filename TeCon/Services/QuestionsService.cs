@@ -11,7 +11,7 @@ namespace TeCon.Services
 {
     class QuestionsService
     {
-        const string Url = "https://teconservice.herokuapp.com/api/Questions/";
+        const string Url = "https://tedevelopment.herokuapp.com/api/Questions/";
         readonly JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

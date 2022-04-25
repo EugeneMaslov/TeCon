@@ -10,7 +10,7 @@ namespace TeCon.Services
 {
     class VarientsService
     {
-        const string Url = "https://teconservice.herokuapp.com/api/Varients/";
+        const string Url = "https://tedevelopment.herokuapp.com/api/Varients/";
         readonly JsonSerializerOptions options = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true

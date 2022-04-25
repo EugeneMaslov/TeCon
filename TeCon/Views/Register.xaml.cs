@@ -20,6 +20,7 @@ namespace TeCon.Views
         }
         protected override async void OnAppearing()
         {
+            CheckLang();
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 isNotConnection.IsVisible = false;
@@ -29,7 +30,6 @@ namespace TeCon.Views
                 isNotConnection.IsVisible = true;
                 ViewModel.IsBusy = true;
             }
-            CheckLang();
         }
         private void CheckLang()
         {
@@ -47,7 +47,7 @@ namespace TeCon.Views
                 buttonBack.Text = "Back";
                 buttonSwapLang.Text = "Change language";
             }
-            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            else if (ViewModel.SelectedLanguage == "Русский")
             {
                 REGISTR.Text = "Регистрация";
                 LOGIN.Text = "Логин:";
@@ -60,6 +60,20 @@ namespace TeCon.Views
                 buttonDeleteUser.Text = "Удалить аккаунт";
                 buttonBack.Text = "Назад";
                 buttonSwapLang.Text = "Сменить язык";
+            }
+            else if (ViewModel.SelectedLanguage == "Беларуская")
+            {
+                REGISTR.Text = "Рэгістрацыя";
+                LOGIN.Text = "Лагін:";
+                EMAIL.Text = "E-mail:";
+                PASSWORD.Text = "Пароль:";
+                LOADING.Text = "Загрузка...";
+                INTERNET_ERROR.Text = "Няма падключэння";
+                buttonBack.Text = "Назад";
+                NOTHING_FIELD.Text = "Бланкі не могуць быць пустымі!";
+                buttonSave.Text = "Захаваць і ўвайсці";
+                buttonDeleteUser.Text = "Выдаліць акаўнт";
+                buttonSwapLang.Text = "Змяніць мову";
             }
         }
     }

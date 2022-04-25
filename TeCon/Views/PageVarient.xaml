@@ -24,8 +24,8 @@
             <Label x:Name="VARIANT_TEXT" FontFamily="Rockwell" Text="Вариант ответа" HorizontalOptions="Center" TextColor="White" FontSize="14"></Label>
             <Entry x:Name="textBox1" FontFamily="Rockwell" Text="{Binding Path=Varient.OVarient}" PlaceholderColor="#" BackgroundColor="#42406c" HeightRequest="50" FontSize="30" TextColor="White" HorizontalTextAlignment="Center"/>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Text="{x:Static local:App.IsTrueText}" FontFamily="Rockwell" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="20"/>
-                <Switch IsToggled="{Binding Varient.IsTrue}" OnColor="#333154" ThumbColor="#333154" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                <Label x:Name="TRUE_VARIANT" Text="True variant" FontFamily="Rockwell" HorizontalOptions="CenterAndExpand" TextColor="White" FontSize="20"/>
+                <Switch IsToggled="{Binding Varient.IsTrue}" OnColor="#9B69FF" ThumbColor="#9B69FF" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout IsVisible="{Binding IsBusy}"
                     HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Padding="20">

@@ -9,7 +9,7 @@
   <Identity
     Name="6958cd4f-27b6-4eca-967c-8eed821292f6af"
     Publisher="CN=EugeneMaslov"
-    Version="1.0.6.0" />
+    Version="1.0.7.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

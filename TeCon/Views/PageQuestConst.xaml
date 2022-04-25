@@ -31,7 +31,7 @@
                             <ViewCell.View>
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="10">
                                     <Label FontFamily="Rockwell" Text="{Binding OVarient}" MaxLines="1" LineBreakMode="HeadTruncation" TextColor="White" FontSize="20" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                                    <Switch IsToggled="{Binding IsTrue}" IsEnabled="False" OnColor="#333154" ThumbColor="#333154" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                                    <Switch IsToggled="{Binding IsTrue}" IsEnabled="False" OnColor="#9B69FF" ThumbColor="#9B69FF" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
                                 </StackLayout>
                             </ViewCell.View>
                         </ViewCell>

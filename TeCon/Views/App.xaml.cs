@@ -9,7 +9,6 @@ namespace TeCon.Views
         public const string HEADER1 = "st";
         public const string HEADER2 = "Con";
         public const string HEADER3 = "structor";
-        public const string IsTrueText = "Правильный ответ";
         public App()
         {
             InitializeComponent();

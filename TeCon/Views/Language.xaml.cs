@@ -25,9 +25,14 @@ namespace TeCon.Views
                 Lang.Text = "Language:";
                 buttonBack.Text = "Back";
             }
-            else if (ViewModel.SelectedLanguage == "Русский (Россия)")
+            else if (ViewModel.SelectedLanguage == "Русский")
             {
                 Lang.Text = "Выберите язык:";
+                buttonBack.Text = "Назад";
+            }
+            else if (ViewModel.SelectedLanguage == "Беларуская")
+            {
+                Lang.Text = "Абярыце мову:";
                 buttonBack.Text = "Назад";
             }
         }
