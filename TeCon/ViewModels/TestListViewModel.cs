@@ -27,6 +27,7 @@ namespace TeCon.ViewModels
         private QuestionsService questionsService;
         private VarientsService varientsService;
         private LoginService loginService;
+        private ResultService resultService;
 
         public string TestCode { get; set; }
         public ObservableCollection<Result> InstantResults { get; set; }
@@ -53,6 +54,7 @@ namespace TeCon.ViewModels
         public ICommand LoginCommand { protected set; get; }
         public ICommand BackCommand { protected set; get; }
         public ICommand CopyCommand { protected set; get; }
+        public ICommand GoResultsCommand { protected set; get; }
 
         public ICommand LanguageCommand { protected set; get; }
 
@@ -96,6 +98,7 @@ namespace TeCon.ViewModels
         public TestListViewModel()
         {
             initialized = false;
+            resultService = new ResultService();
             testsService = new TestsService();
             questionsService = new QuestionsService();
             varientsService = new VarientsService();
@@ -123,7 +126,34 @@ namespace TeCon.ViewModels
             BackCommand = new Command(Back);
             CopyCommand = new Command(CopyMethod);
             LanguageCommand = new Command(LanguageMethod);
+            GoResultsCommand = new Command(GoResults);
             Languages = new ObservableCollection<string>() { "English", "Русский", "Беларуская" };
+        }
+        #endregion
+        #region Results
+        public void GoResults()
+        {
+            GetResults();
+            Navigation.PushModalAsync(new Results(this));
+        }
+        private async Task GetResults()
+        {
+            IsBusy = true;
+            // очищаем список
+            InstantResults.Clear();
+            while (InstantResults.Any())
+                InstantResults.RemoveAt(Tests.Count - 1);
+
+            // добавляем загруженные данные
+            IEnumerable<Result> friends = await resultService.Get(selectedTest.Id);
+            foreach (Result item in friends)
+            {
+                if (!InstantResults.Contains(item))
+                {
+                    InstantResults.Add(item);
+                }
+            }
+            IsBusy = false;
         }
         #endregion
         #region Localization

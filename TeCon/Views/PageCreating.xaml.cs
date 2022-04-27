@@ -43,6 +43,7 @@ namespace TeCon.Views
                 buttonQuest.Text = "Create question";
                 LOADING.Text = "Loading...";
                 INTERNET_ERROR.Text = "Something wrong. Check your internet access";
+                goResult.Text = "View results";
                 buttonBack.Text = "Back";
             }
             else if (ViewModel.SelectedLanguage == "Русский")
@@ -55,6 +56,7 @@ namespace TeCon.Views
                 buttonQuest.Text = "Создать вопрос";
                 LOADING.Text = "Загрузка...";
                 INTERNET_ERROR.Text = "Нет подключения";
+                goResult.Text = "Результаты";
                 buttonBack.Text = "Назад";
             }
             else if (ViewModel.SelectedLanguage == "Беларуская")
@@ -67,6 +69,7 @@ namespace TeCon.Views
                 buttonQuest.Text = "Стварыць пытанне";
                 LOADING.Text = "Загрузка...";
                 INTERNET_ERROR.Text = "Няма падключэння";
+                goResult.Text = "Вынікі";
                 buttonBack.Text = "Назад";
             }
         }
